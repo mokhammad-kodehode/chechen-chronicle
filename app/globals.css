@@ -8,19 +8,318 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-playfair), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.01em;
+}
+
+/* ——— Hero animations ——— */
+
+@keyframes ccd-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ccd-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ccd-ken-burns {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes ccd-shimmer {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scaleX(1.04);
+  }
+}
+
+@keyframes ccd-line-extend {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Photo "ages": visible from t=0 in fresh state, then becomes vintage */
+@keyframes ccd-photo-age {
+  0%,
+  30% {
+    opacity: 1;
+    filter: saturate(1) contrast(1);
+  }
+  100% {
+    opacity: 0.9;
+    filter: saturate(0.85) contrast(1.4);
+  }
+}
+
+/* Paper tint: invisible while photo is "fresh", then fades in as it ages */
+@keyframes ccd-paper-age {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-rise {
+  opacity: 0;
+  animation: ccd-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-rise-fast {
+  opacity: 0;
+  animation: ccd-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-fast {
+  opacity: 0;
+  animation: ccd-fade 0.9s ease-out both;
+}
+
+.animate-fade {
+  opacity: 0;
+  animation: ccd-fade 1.6s ease-out both;
+}
+
+.animate-hero-photo {
+  animation: ccd-photo-age 4.5s cubic-bezier(0.4, 0, 0.2, 1) both,
+    ccd-ken-burns 24s ease-out both;
+}
+
+.animate-paper-age {
+  animation: ccd-paper-age 4.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-shimmer {
+  animation: ccd-shimmer 4s ease-in-out infinite;
+}
+
+.animate-line-extend {
+  animation: ccd-line-extend 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-rise-fast,
+  .animate-fade,
+  .animate-fade-fast,
+  .animate-hero-photo,
+  .animate-paper-age,
+  .animate-shimmer,
+  .animate-line-extend {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ——— Article body (publication detail) ——— */
+
+.article-body {
+  font-feature-settings: "kern", "liga", "calt", "onum";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Lead paragraph: first paragraph slightly larger, more breath */
+.article-body > p:first-of-type {
+  font-size: 1.22em;
+  line-height: 1.7;
+  color: #1c1c1c;
+}
+
+/* Drop cap on the first letter of the first paragraph */
+.article-body > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-playfair), Georgia, "Times New Roman", serif;
+  font-size: 4.6em;
+  line-height: 0.85;
+  font-weight: 600;
+  margin: 0.05em 0.08em 0 0;
+  padding: 0;
+  color: #783f04;
+}
+
+/* Subtle ornamental divider between paragraphs (only when 5+ in a row) */
+.article-body > p + p {
+  margin-top: 1.25em;
+}
+
+.article-body > p,
+.article-body > ul,
+.article-body > ol {
+  hyphens: auto;
+}
+
+/* Ornament shown above the body */
+.article-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: rgba(120, 63, 4, 0.55);
+  font-family: var(--font-playfair), Georgia, serif;
+  letter-spacing: 0.3em;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.article-ornament::before,
+.article-ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(120, 63, 4, 0.25),
+    transparent
+  );
+  max-width: 80px;
+}
+
+.article-ornament-glyph {
+  font-size: 1.2rem;
+  line-height: 1;
+  color: rgba(120, 63, 4, 0.7);
+}
+
+/* ——— Skeleton shimmer (used in loading.tsx) ——— */
+
+@keyframes ccd-skeleton-shimmer {
+  from {
+    background-position: -180px 0;
+  }
+  to {
+    background-position: calc(180px + 100%) 0;
+  }
+}
+
+.skeleton-shimmer {
+  background-color: rgba(245, 222, 179, 0.45);
+  background-image: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 248, 230, 0.85) 50%,
+    transparent 100%
+  );
+  background-size: 180px 100%;
+  background-repeat: no-repeat;
+  animation: ccd-skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+.skeleton-shimmer-dim {
+  background-color: rgba(120, 63, 4, 0.12);
+  background-image: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 240, 210, 0.35) 50%,
+    transparent 100%
+  );
+  background-size: 180px 100%;
+  background-repeat: no-repeat;
+  animation: ccd-skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer,
+  .skeleton-shimmer-dim {
+    animation: none;
+  }
+}
+
+/* Reading progress bar at top */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, #783f04, #b85c0a);
+  z-index: 60;
+  transform-origin: left;
+  pointer-events: none;
+  transition: transform 60ms linear;
+}
+
+/* ——— Paper texture (used for hero backgrounds) ——— */
+
+.bg-paper {
+  background-color: #f3ead4;
+  background-image:
+    /* warm sepia spot top-left */
+    radial-gradient(
+      ellipse 70% 60% at 12% 18%,
+      rgba(170, 110, 45, 0.18),
+      transparent 65%
+    ),
+    /* deeper spot bottom-right */
+    radial-gradient(
+      ellipse 60% 55% at 88% 80%,
+      rgba(140, 90, 35, 0.20),
+      transparent 60%
+    ),
+    /* small accent spot bottom-left */
+    radial-gradient(
+      circle 22% at 28% 82%,
+      rgba(170, 110, 50, 0.12),
+      transparent 60%
+    ),
+    /* gentle warm highlight center-top */
+    radial-gradient(
+      ellipse 60% 45% at 55% 30%,
+      rgba(255, 246, 218, 0.55),
+      transparent 70%
+    ),
+    /* edge vignette */
+    radial-gradient(
+      ellipse 110% 105% at 50% 50%,
+      transparent 50%,
+      rgba(80, 45, 15, 0.14) 100%
+    ),
+    /* paper grain (SVG fractal noise) */
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.28  0 0 0 0 0.15  0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat,
+    repeat;
+  background-size: auto, auto, auto, auto, auto, 260px 260px;
 }

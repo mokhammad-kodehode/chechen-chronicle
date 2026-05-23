@@ -33,6 +33,13 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# image compression intermediates
+public/**/*.tmp
+
+# sanity
+sanity/dist/
+.sanity/
+
 # vercel
 .vercel
 
