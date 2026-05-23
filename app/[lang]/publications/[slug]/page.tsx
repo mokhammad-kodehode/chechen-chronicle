@@ -126,6 +126,46 @@ export default async function PublicationPage({
 
           <PublicationArticle blocks={publication.body} />
 
+          {publication.enable3DView ? (
+            <div className="mt-12 overflow-hidden rounded-xl border border-amber-900/20 bg-gradient-to-br from-amber-950 to-stone-900 text-amber-50 shadow-lg">
+              <div className="grid items-center gap-6 px-6 py-7 md:grid-cols-[1fr_auto] md:gap-10 md:px-10 md:py-9">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-amber-300/80">
+                    Артефакт
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-amber-50 md:text-2xl">
+                    Посмотреть предмет в 3D
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-amber-100/75 md:text-[15px]">
+                    Объект можно вращать, приближать и рассматривать со всех
+                    сторон. Откроется в полноэкранном просмотрщике.
+                  </p>
+                </div>
+                <LocalizedLink
+                  href={`/publications/${publication.slug}/3d`}
+                  className="group inline-flex h-12 items-center justify-center gap-2 self-start rounded-full bg-amber-50 px-7 text-sm font-semibold text-amber-950 transition hover:bg-white md:self-center"
+                >
+                  Открыть 3D
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="transition group-hover:translate-x-0.5"
+                    aria-hidden
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M13 5l7 7-7 7" />
+                  </svg>
+                </LocalizedLink>
+              </div>
+            </div>
+          ) : null}
+
           {publication.tags.length > 0 ? (
             <div className="mt-14 flex flex-wrap items-center gap-2 border-t border-amber-900/10 pt-8">
               <span className="text-xs uppercase tracking-widest text-neutral-500">

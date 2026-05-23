@@ -18,6 +18,8 @@ const PUBLICATION_FIELDS = groq`
   category,
   tags,
   featured,
+  enable3DView,
+  "model3dUrl": model3d.asset->url,
 `;
 
 export const ALL_PUBLICATIONS_QUERY = groq`

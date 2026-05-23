@@ -58,6 +58,8 @@ export type Publication = {
   category: PublicationCategory;
   tags: string[];
   featured?: boolean;
+  enable3DView?: boolean;
+  model3dUrl?: string;
   body: PortableTextBlock[];
 };
 
@@ -77,6 +79,8 @@ type RawSanityPublication = {
   category: PublicationCategory;
   tags?: string[];
   featured?: boolean;
+  enable3DView?: boolean;
+  model3dUrl?: string;
   body?: PortableTextBlock[];
 };
 
@@ -106,6 +110,8 @@ function toPublication(raw: RawSanityPublication): Publication {
     category: raw.category,
     tags: raw.tags ?? [],
     featured: raw.featured ?? false,
+    enable3DView: raw.enable3DView ?? false,
+    model3dUrl: raw.model3dUrl,
     body,
   };
 }

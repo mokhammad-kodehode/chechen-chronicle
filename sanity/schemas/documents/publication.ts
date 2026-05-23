@@ -113,6 +113,27 @@ export const publication = defineType({
       type: "blockContent",
       group: "body",
     }),
+
+    // 3D viewer
+    defineField({
+      name: "enable3DView",
+      title: "Включить 3D-просмотр",
+      description:
+        "Если включено — на странице публикации появится кнопка «Посмотреть в 3D»",
+      type: "boolean",
+      initialValue: false,
+      group: "main",
+    }),
+    defineField({
+      name: "model3d",
+      title: "3D-модель (.glb)",
+      description:
+        "Файл .glb (например из Meshy/Tripo3D). Если не загружен — будет процедурная модель на основе текстуры ниже.",
+      type: "file",
+      options: { accept: ".glb,.gltf,model/gltf-binary,model/gltf+json" },
+      group: "main",
+      hidden: ({ parent }) => !parent?.enable3DView,
+    }),
   ],
   preview: {
     select: {
