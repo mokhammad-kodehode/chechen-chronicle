@@ -1,4 +1,5 @@
 import { LocalizedLink } from "./common/LocalizedLink";
+import { HeaderMobileMenu } from "./HeaderMobileMenu";
 import type { Dictionary } from "@/app/lib/i18n/shared";
 
 type Props = {
@@ -13,7 +14,7 @@ export function Header({ dict }: Props) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-amber-900/10 bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <LocalizedLink href="/" className="flex items-center gap-3">
           <span className="grid h-9 w-9 place-items-center rounded-md border text-sm font-semibold">
@@ -38,6 +39,8 @@ export function Header({ dict }: Props) {
             </LocalizedLink>
           ))}
         </nav>
+
+        <HeaderMobileMenu items={nav} />
       </div>
     </header>
   );

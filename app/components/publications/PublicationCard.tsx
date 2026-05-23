@@ -5,6 +5,7 @@ import type { Dictionary } from "@/app/lib/i18n/shared";
 import type { Locale } from "@/app/lib/i18n/config";
 import { PublicationCategoryBadge } from "./PublicationCategoryBadge";
 import { PublicationMeta } from "./PublicationMeta";
+import { Publication3DBadge } from "./Publication3DBadge";
 
 type Props = {
   publication: Publication;
@@ -15,7 +16,7 @@ type Props = {
 export function PublicationCard({ publication, lang, dict }: Props) {
   const href = `/publications/${publication.slug}`;
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-amber-900/15 bg-white shadow-sm transition hover:border-amber-900/40 hover:shadow-md">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-amber-900/15 bg-white shadow-sm transition hover:border-amber-900/40 hover:shadow-md">
       <LocalizedLink href={href} className="block">
         <div className="relative aspect-[16/10] overflow-hidden bg-amber-50">
           {publication.coverImageUrl ? (
@@ -45,6 +46,12 @@ export function PublicationCard({ publication, lang, dict }: Props) {
           </div>
         </div>
       </LocalizedLink>
+
+      {publication.enable3DView ? (
+        <div className="absolute right-3 top-3">
+          <Publication3DBadge slug={publication.slug} size="sm" />
+        </div>
+      ) : null}
 
       <div className="flex flex-1 flex-col px-5 py-5">
         <LocalizedLink href={href}>

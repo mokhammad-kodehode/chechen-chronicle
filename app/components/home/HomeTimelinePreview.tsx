@@ -60,7 +60,8 @@ export function HomeTimelinePreview({ dict }: Props) {
                     <div className="mx-auto mt-2 h-5 w-px bg-amber-900/25" />
                   </div>
 
-                  <div className="md:grid md:grid-cols-2 md:gap-10">
+                  {/* Desktop: two-column timeline */}
+                  <div className="hidden md:grid md:grid-cols-2 md:gap-10">
                     <div className={isRight ? "md:col-start-1 md:opacity-0" : "md:col-start-1"}>
                       {!isRight && (
                         <Reveal delay={idx * 80} from="left">
@@ -80,12 +81,13 @@ export function HomeTimelinePreview({ dict }: Props) {
                         </Reveal>
                       )}
                     </div>
+                  </div>
 
-                    <div className="md:hidden">
-                      <Reveal delay={idx * 80} from="up">
-                        <TimelineItemCard item={item} />
-                      </Reveal>
-                    </div>
+                  {/* Mobile: single column */}
+                  <div className="md:hidden">
+                    <Reveal delay={idx * 80} from="up">
+                      <TimelineItemCard item={item} />
+                    </Reveal>
                   </div>
                 </div>
               );

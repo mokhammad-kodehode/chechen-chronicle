@@ -1,27 +1,26 @@
 import Image from "next/image";
+import heroTower from "@/public/images/hero-tower.webp";
 import { LocalizedLink } from "../common/LocalizedLink";
 import type { Dictionary } from "@/app/lib/i18n/shared";
 
 type Props = {
-  backgroundImageUrl?: string;
   dict: Dictionary["home"]["hero"];
 };
 
-export function HomeHero({ backgroundImageUrl, dict }: Props) {
+export function HomeHero({ dict }: Props) {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden bg-[#EFE4CC]">
       {/* Background */}
       <div className="absolute inset-0">
-        {backgroundImageUrl ? (
-          <Image
-            src={backgroundImageUrl}
-            alt={dict.title}
-            fill
-            priority
-            sizes="100vw"
-            className="animate-hero-photo object-cover object-[65%_center] sm:object-center"
-          />
-        ) : null}
+        <Image
+          src={heroTower}
+          alt={dict.title}
+          fill
+          priority
+          placeholder="blur"
+          sizes="100vw"
+          className="animate-hero-photo object-cover object-[65%_center] sm:object-center"
+        />
 
         {/* Base paper tint — fades in as the photo "ages" */}
         <div className="animate-paper-age absolute inset-0 bg-gradient-to-b from-[#F4F0E8]/75 via-[#F7F2E8]/68 to-[#F4F0E8]/58" />
@@ -32,7 +31,7 @@ export function HomeHero({ backgroundImageUrl, dict }: Props) {
           style={{
             background:
               "radial-gradient(70% 60% at 50% 38%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.18) 55%, rgba(0,0,0,0.06) 100%)",
-            animationDelay: "200ms",
+            animationDelay: "100ms",
           }}
         />
       </div>
@@ -41,35 +40,35 @@ export function HomeHero({ backgroundImageUrl, dict }: Props) {
         <div className="mx-auto w-full max-w-2xl text-center">
           <div
             className="animate-rise mx-auto inline-flex items-center justify-center rounded border border-amber-900/40 bg-white/60 px-4 py-2 text-[11px] font-semibold tracking-widest text-amber-900 backdrop-blur"
-            style={{ animationDelay: "200ms" }}
+            style={{ animationDelay: "80ms" }}
           >
             {dict.kicker}
           </div>
 
           <h1
             className="animate-rise mt-6 text-4xl font-semibold tracking-tight text-amber-950 md:text-6xl"
-            style={{ animationDelay: "350ms" }}
+            style={{ animationDelay: "160ms" }}
           >
             {dict.title}
           </h1>
 
           <p
             className="animate-rise mt-3 text-lg font-semibold italic text-amber-900/90 md:text-xl"
-            style={{ animationDelay: "500ms" }}
+            style={{ animationDelay: "240ms" }}
           >
             {dict.subtitle}
           </p>
 
           <p
             className="animate-rise mx-auto mt-6 max-w-xl text-sm leading-6 text-neutral-700 md:text-base"
-            style={{ animationDelay: "650ms" }}
+            style={{ animationDelay: "320ms" }}
           >
             {dict.description}
           </p>
 
           <div
             className="animate-rise mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            style={{ animationDelay: "800ms" }}
+            style={{ animationDelay: "400ms" }}
           >
             <LocalizedLink
               href="/timeline"
@@ -89,7 +88,7 @@ export function HomeHero({ backgroundImageUrl, dict }: Props) {
           {/* ornament */}
           <div
             className="animate-rise mt-10 flex items-center justify-center gap-4 text-amber-900/40 md:mt-12"
-            style={{ animationDelay: "950ms" }}
+            style={{ animationDelay: "480ms" }}
           >
             <span className="animate-shimmer h-px w-20 origin-right bg-amber-900/30" />
             <span className="h-1.5 w-1.5 rotate-45 bg-amber-900/40" />

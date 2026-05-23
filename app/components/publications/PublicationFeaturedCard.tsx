@@ -5,6 +5,7 @@ import type { Dictionary } from "@/app/lib/i18n/shared";
 import type { Locale } from "@/app/lib/i18n/config";
 import { PublicationCategoryBadge } from "./PublicationCategoryBadge";
 import { PublicationMeta } from "./PublicationMeta";
+import { Publication3DBadge } from "./Publication3DBadge";
 
 type Props = {
   publication: Publication;
@@ -16,6 +17,11 @@ export function PublicationFeaturedCard({ publication, lang, dict }: Props) {
   const href = `/publications/${publication.slug}`;
   return (
     <article className="group relative overflow-hidden rounded-xl border border-amber-900/20 bg-white shadow-sm">
+      {publication.enable3DView ? (
+        <div className="absolute right-4 top-4 z-10">
+          <Publication3DBadge slug={publication.slug} size="md" />
+        </div>
+      ) : null}
       <div className="grid md:grid-cols-5">
         <LocalizedLink
           href={href}
