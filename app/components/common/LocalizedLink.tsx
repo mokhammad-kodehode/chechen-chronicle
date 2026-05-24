@@ -19,7 +19,8 @@ type Props = Omit<ComponentPropsWithoutRef<"a">, "href"> &
  */
 export function LocalizedLink({ href, ...props }: Props) {
   const params = useParams();
-  const langParam = typeof params.lang === "string" ? params.lang : null;
+  const langParam =
+    params && typeof params.lang === "string" ? params.lang : null;
   const lang = langParam && isLocale(langParam) ? langParam : DEFAULT_LOCALE;
 
   const isInternal =

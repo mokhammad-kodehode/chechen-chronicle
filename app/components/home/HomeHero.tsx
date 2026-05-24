@@ -71,7 +71,7 @@ export function HomeHero({ dict }: Props) {
             style={{ animationDelay: "400ms" }}
           >
             <LocalizedLink
-              href="/timeline"
+              href="/istorii/bashnya"
               className="inline-flex h-11 items-center justify-center rounded border border-amber-900 bg-amber-900 px-6 text-sm font-semibold text-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-amber-800 hover:shadow-md active:translate-y-0"
             >
               {dict.buttonStart}
