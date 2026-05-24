@@ -12,6 +12,9 @@ export type Story = {
   title: string;
   subtitle: string;
   body: string;
+  /** Optional portrait/illustration. Used on the story card and in the
+   *  category-header collage. Path relative to /public. */
+  image?: string;
 };
 
 export type Category = {
@@ -111,6 +114,7 @@ export const CATEGORIES: Category[] = [
         title: "Хранитель порога",
         subtitle: "Адат и сталь",
         body: "Кавказский воин Средневековья — пахарь и боец одновременно. Кодекс чести, оружие на поясе с детства.",
+        image: "/images/warriors/khranitel-poroga.jpg",
       },
       {
         href: null,

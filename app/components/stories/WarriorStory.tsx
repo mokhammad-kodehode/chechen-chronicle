@@ -288,10 +288,10 @@ function StoryHtml() {
             className="pointer-events-none flex items-end justify-center px-5 pb-20 md:items-center md:px-4 md:pb-0"
             style={{
               position: "absolute",
-              top: `${idx * 100}vh`,
+              top: `${idx * 100}svh`,
               left: 0,
               right: 0,
-              height: "100vh",
+              height: "100svh",
             }}
           >
             <div
@@ -324,7 +324,7 @@ function StoryHtml() {
 
       <div
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/50"
-        style={{ top: "92vh" }}
+        style={{ top: "92svh" }}
       >
         ↓ Скролл
       </div>
