@@ -203,14 +203,27 @@ const KEYFRAMES: Keyframe[] = [
     rotationA: 2 * Math.PI,
     hearthFire: 0, signalFire: 0,
   },
-  // Sec 4 end — B→A swap, camera pulls back.
+  // Hold B fully visible until just before the B→A swap — same close
+  // framing, so the swap happens at stable camera with no pull-back
+  // chaos during the cross-fade.
+  {
+    p: 0.76,
+    camX: 0, camY: 1.8, camZ: 3.7,
+    lookX: 0, lookY: 1.5,
+    opacityA: 0, opacityB: 1,
+    rotationA: 2 * Math.PI,
+    hearthFire: 0, signalFire: 0,
+  },
+  // B→A swap completes — fade window is only 0.76 → 0.78 (2% of scroll),
+  // and the camera is still at the same close framing so the silhouettes
+  // are stable. The pull-back to defence happens AFTER the swap.
   {
     p: 0.78,
-    camX: 0, camY: 2.2, camZ: 8,
-    lookX: 0, lookY: 2,
+    camX: 0, camY: 1.8, camZ: 3.7,
+    lookX: 0, lookY: 1.5,
     opacityA: 1, opacityB: 0,
     rotationA: 2 * Math.PI,
-    hearthFire: 0, signalFire: 0.3,
+    hearthFire: 0, signalFire: 0.15,
   },
   // ── Section 5 — DEFENCE (p=0.80) ──────────────────────────────────
   // A at full height, signal fire blazing from the upper window.
