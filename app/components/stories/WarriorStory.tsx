@@ -269,9 +269,11 @@ function Scene() {
 function StoryHtml() {
   return (
     <Scroll html style={{ width: "100%" }}>
-      <div className="fixed left-4 top-4 z-50 md:left-8 md:top-6">
+      {/* Back button positioned BELOW the global sticky header so it
+          isn't hidden behind it. */}
+      <div className="fixed left-4 top-20 z-50 md:left-8 md:top-24">
         <LocalizedLink
-          href="/publications"
+          href="/istorii"
           className="inline-flex items-center gap-2 rounded-full border border-amber-100/15 bg-amber-950/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/80 backdrop-blur transition hover:border-amber-100/40 hover:bg-amber-950 hover:text-white"
         >
           ← Назад

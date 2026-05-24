@@ -9,6 +9,7 @@ type Props = {
 export function Header({ dict }: Props) {
   const nav = [
     { href: "/", label: dict.nav.home },
+    { href: "/istorii", label: dict.nav.stories },
     { href: "/publications", label: dict.nav.publications },
     { href: "/archive", label: dict.nav.archive },
   ];

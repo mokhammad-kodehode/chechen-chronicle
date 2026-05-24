@@ -7,7 +7,8 @@
   "nav": {
     "home": "Главная",
     "publications": "Публикации",
-    "archive": "Архив"
+    "archive": "Архив",
+    "stories": "Истории"
   },
   "home": {
     "hero": {
