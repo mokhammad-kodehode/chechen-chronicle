@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, IBM_Plex_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { Header } from "@/app/components/Header";
@@ -16,6 +16,13 @@ const inter = Inter({
 const playfair = Playfair_Display({
   subsets: ["latin", "cyrillic"],
   variable: "--font-playfair",
+  display: "swap",
+});
+
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex",
   display: "swap",
 });
 
@@ -53,7 +60,10 @@ export default async function LocaleLayout({
   const dict = await getDictionary(lang as Locale);
 
   return (
-    <html lang={lang} className={`${inter.variable} ${playfair.variable}`}>
+    <html
+      lang={lang}
+      className={`${inter.variable} ${playfair.variable} ${plexSans.variable}`}
+    >
       <body className="min-h-screen bg-white text-neutral-900 antialiased">
         <Header dict={dict} />
         <main>{children}</main>

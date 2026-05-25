@@ -18,7 +18,9 @@ import {
   Vignette,
 } from "@react-three/postprocessing";
 import * as THREE from "three";
+import { useParams } from "next/navigation";
 import { LocalizedLink } from "@/app/components/common/LocalizedLink";
+import { StoryProgressNav } from "./StoryProgressNav";
 
 // ──────────────────────────────────────────────
 // Narrative — 4 sections of product-photography-style story.
@@ -33,7 +35,7 @@ type Section = {
   body: string;
 };
 
-const SECTIONS: Section[] = [
+const SECTIONS_RU: Section[] = [
   {
     id: "intro",
     kicker: "КИНЖАЛ",
@@ -60,7 +62,34 @@ const SECTIONS: Section[] = [
   },
 ];
 
-const TOTAL_PAGES = SECTIONS.length;
+const SECTIONS_EN: Section[] = [
+  {
+    id: "intro",
+    kicker: "THE DAGGER",
+    title: "The heart of a man",
+    body: "The kama is a straight, double-edged dagger. Its Caucasian form settled by the seventeenth century and remained almost unchanged into the early twentieth. A highland boy received his dagger as a child and wore it without ever taking it off — the mark of a man, a warrior, and the master of his house.",
+  },
+  {
+    id: "blade",
+    kicker: "THE STEEL",
+    title: "A straight blade",
+    body: "Thirty to fifty centimetres long. Symmetrical, double-edged, with a central ridge or fuller. Not made for the wide sweep — for the direct thrust and precise work. The steel was forged by the clan's smiths; the blade's name was inherited across generations.",
+  },
+  {
+    id: "hilt",
+    kicker: "HONOUR",
+    title: "Silver with niello",
+    body: "A dagger was never given to an outsider. Fully \"dressed\" — its grip and sheath sheathed in silver with niello, gold-inlaid — it cost more than a good horse. Chechen masters adopted Kabardian patterns and shaped a style of their own.",
+  },
+  {
+    id: "memory",
+    kicker: "THE WORD",
+    title: "Remembered as a friend",
+    body: "The dagger was named in songs, proverbs and legends. It was not called \"a weapon\" — it was named, like a living thing. An inherited blade carried not only the steel but the memory of a father, a grandfather, a great-grandfather, whose hands had once held the same grip.",
+  },
+];
+
+const TOTAL_PAGES = SECTIONS_RU.length;
 
 // Single hero model — the more detailed of the two Meshy exports.
 useGLTF.preload("/models/dagger-2.glb");
@@ -348,18 +377,24 @@ function Scene() {
 // ──────────────────────────────────────────────
 
 function StoryHtml() {
+  const params = useParams();
+  const lang = typeof params?.lang === "string" ? params.lang : "ru";
+  const sections = lang === "en" ? SECTIONS_EN : SECTIONS_RU;
+  const backLabel = lang === "en" ? "← Back" : "← Назад";
   return (
     <Scroll html style={{ width: "100%" }}>
       <div className="fixed left-4 top-20 z-50 md:left-8 md:top-24">
         <LocalizedLink
-          href="/istorii"
+          href="/istorii/weapons#stories"
           className="inline-flex items-center gap-2 rounded-full border border-amber-100/15 bg-amber-950/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/80 backdrop-blur transition hover:border-amber-100/40 hover:bg-amber-950 hover:text-white"
         >
-          ← Назад
+          {backLabel}
         </LocalizedLink>
       </div>
 
-      {SECTIONS.map((section, idx) => {
+      <StoryProgressNav sections={sections} />
+
+      {sections.map((section, idx) => {
         const isRight = idx % 2 === 1;
         return (
           <section
@@ -405,7 +440,7 @@ function StoryHtml() {
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/50"
         style={{ top: "92svh" }}
       >
-        ↓ Скролл
+        {lang === "en" ? "↓ Scroll" : "↓ Скролл"}
       </div>
     </Scroll>
   );

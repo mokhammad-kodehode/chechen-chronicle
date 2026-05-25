@@ -26,9 +26,14 @@ export function LocalizedLink({ href, ...props }: Props) {
   const isInternal =
     typeof href === "string" && href.startsWith("/") && !href.startsWith("//");
 
+  // For "/" → "/ru". For root hash like "/#stories-preview" →
+  // "/ru#stories-preview" (no extra slash before the hash). Everything
+  // else gets the locale prepended verbatim.
   const localized = isInternal
     ? href === "/"
       ? `/${lang}`
+      : href.startsWith("/#") || href.startsWith("/?")
+      ? `/${lang}${href.slice(1)}`
       : `/${lang}${href}`
     : href;
 

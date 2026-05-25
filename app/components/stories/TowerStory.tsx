@@ -13,7 +13,9 @@ import {
 } from "@react-three/drei";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import * as THREE from "three";
+import { useParams } from "next/navigation";
 import { LocalizedLink } from "@/app/components/common/LocalizedLink";
+import { StoryProgressNav } from "./StoryProgressNav";
 
 // ──────────────────────────────────────────────
 // Narrative — 6 sections. Each text panel sits at top = idx * 100vh and
@@ -27,7 +29,7 @@ type Section = {
   body: string;
 };
 
-const SECTIONS: Section[] = [
+const SECTIONS_RU: Section[] = [
   {
     id: "intro",
     kicker: "ИСТОРИЯ",
@@ -66,7 +68,48 @@ const SECTIONS: Section[] = [
   },
 ];
 
-const TOTAL_PAGES = SECTIONS.length;
+// English mirror — same ids/order/length, narrative kept faithful to
+// the Russian but written natively, not transliterated.
+const SECTIONS_EN: Section[] = [
+  {
+    id: "intro",
+    kicker: "THE STORY",
+    title: "The Tower — a clan's covenant with the mountain",
+    body: "Across the highlands of Chechnya and Ingushetia stand stone towers — the emblem of Vainakh civilization. They served at once as home, fortress and sanctuary.",
+  },
+  {
+    id: "construction",
+    kicker: "CONSTRUCTION",
+    title: "Dry-stone masonry and machicolations",
+    body: "A battle tower could reach 25–28 metres in height, with a slender ten-to-one ratio. The stone was laid without mortar. Machicolations — projecting parapets — let defenders strike the enemy at the foot of the wall.",
+  },
+  {
+    id: "interior",
+    kicker: "THE BUILDERS",
+    title: "Without mortar, without scaffolding",
+    body: "The towers were raised without external scaffolding — every course was set from platforms within. Oxen hauled the great stones on sledges; the masons dressed them with the berg and the varzap. The walls lean inward as they rise, narrowing toward the crown. The final keystone of the roof was laid by the master himself — the most honoured and the most perilous task of all.",
+  },
+  {
+    id: "fireplace",
+    kicker: "INSIDE",
+    title: "Floors of memory",
+    body: "The tower opens up — its inner tiers come into view. Four storeys: the hearth at the bottom, then living and defensive chambers with arched windows above.",
+  },
+  {
+    id: "defense",
+    kicker: "DEFENCE",
+    title: "When the enemy advanced",
+    body: "On the uppermost tier — in the battle turret — a torch would be lit. Flame leapt from the loopholes and smoke rose in a column. The signal could be seen by neighbouring clans for tens of versts: an alarm, a call for help.",
+  },
+  {
+    id: "epilogue",
+    kicker: "MEMORY",
+    title: "The covenant still holds",
+    body: "The towers have endured among the cliffs of the Argun gorge. Each one remembers the name of its clan. Not a house, not a fortress — a covenant between a people and the mountain.",
+  },
+];
+
+const TOTAL_PAGES = SECTIONS_RU.length;
 
 useGLTF.preload("/models/tower.glb");
 useGLTF.preload("/models/tower-section.glb");
@@ -698,20 +741,26 @@ function Scene() {
 }
 
 function StoryHtml() {
+  const params = useParams();
+  const lang = typeof params?.lang === "string" ? params.lang : "ru";
+  const sections = lang === "en" ? SECTIONS_EN : SECTIONS_RU;
+  const backLabel = lang === "en" ? "← Back" : "← Назад";
   return (
     <Scroll html style={{ width: "100%" }}>
       {/* Back button positioned BELOW the global sticky header (~60-70px
           tall) so it isn't hidden behind it on either mobile or desktop. */}
       <div className="fixed left-4 top-20 z-50 md:left-8 md:top-24">
         <LocalizedLink
-          href="/istorii"
+          href="/istorii/dwellings#stories"
           className="inline-flex items-center gap-2 rounded-full border border-amber-100/15 bg-amber-950/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/80 backdrop-blur transition hover:border-amber-100/40 hover:bg-amber-950 hover:text-white"
         >
-          ← Назад
+          {backLabel}
         </LocalizedLink>
       </div>
 
-      {SECTIONS.map((section, idx) => {
+      <StoryProgressNav sections={sections} />
+
+      {sections.map((section, idx) => {
         const isRight = idx % 2 === 1;
         return (
           <section
@@ -761,7 +810,7 @@ function StoryHtml() {
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/50"
         style={{ top: "92svh" }}
       >
-        ↓ Скролл
+        {lang === "en" ? "↓ Scroll" : "↓ Скролл"}
       </div>
     </Scroll>
   );

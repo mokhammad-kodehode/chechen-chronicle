@@ -18,7 +18,9 @@ import {
   Vignette,
 } from "@react-three/postprocessing";
 import * as THREE from "three";
+import { useParams } from "next/navigation";
 import { LocalizedLink } from "@/app/components/common/LocalizedLink";
+import { StoryProgressNav } from "./StoryProgressNav";
 
 // ──────────────────────────────────────────────
 // Narrative — 4 sections on the Caucasian watchtower (сторожевая башня).
@@ -32,7 +34,7 @@ type Section = {
   body: string;
 };
 
-const SECTIONS: Section[] = [
+const SECTIONS_RU: Section[] = [
   {
     id: "intro",
     kicker: "КРОВЛЯ",
@@ -59,7 +61,34 @@ const SECTIONS: Section[] = [
   },
 ];
 
-const TOTAL_PAGES = SECTIONS.length;
+const SECTIONS_EN: Section[] = [
+  {
+    id: "intro",
+    kicker: "THE ROOF",
+    title: "A tower without a pavilion",
+    body: "Not every tower wore a pyramidal roof. This one carries a flat fighting platform on top: an open slab ringed with crenellations, from which the horizon opens on every side. The stones are hand-dressed, the masonry inclines inward, set without mortar.",
+  },
+  {
+    id: "machicolations",
+    kicker: "MACHICOLATIONS",
+    title: "A double crown",
+    body: "Beneath the fighting platform run two tiers of machicolations — overhanging parapets with slits pointed downward. If an enemy approached the wall, he was struck from above, straight into the foot of the stone. The double row covered every face and every corner of the tower.",
+  },
+  {
+    id: "watch",
+    kicker: "THE LOOKOUT",
+    title: "The watchman's cabin",
+    body: "At the very summit sits a small stone cabin. The watchman sheltered within: he kept the trails and passes in view, counted the riders, read the columns of smoke that rose from the neighbouring towers. Fire and mirror turned a glance into a signal — far beyond the reach of voice.",
+  },
+  {
+    id: "memory",
+    kicker: "MEMORY",
+    title: "The stone that still looks out",
+    body: "Towers of this kind were raised on spurs and in saddles — where the view opens and the paths converge. The watchman's work ended long ago, but the masonry has stayed. Even now you can see from below: the stones are laid so that the view from within is still whole.",
+  },
+];
+
+const TOTAL_PAGES = SECTIONS_RU.length;
 
 useGLTF.preload("/models/watchtower.glb");
 
@@ -385,18 +414,24 @@ function Scene() {
 }
 
 function StoryHtml() {
+  const params = useParams();
+  const lang = typeof params?.lang === "string" ? params.lang : "ru";
+  const sections = lang === "en" ? SECTIONS_EN : SECTIONS_RU;
+  const backLabel = lang === "en" ? "← Back" : "← Назад";
   return (
     <Scroll html style={{ width: "100%" }}>
       <div className="fixed left-4 top-20 z-50 md:left-8 md:top-24">
         <LocalizedLink
-          href="/istorii/dwellings"
+          href="/istorii/dwellings#stories"
           className="inline-flex items-center gap-2 rounded-full border border-amber-100/15 bg-amber-950/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/80 backdrop-blur transition hover:border-amber-100/40 hover:bg-amber-950 hover:text-white"
         >
-          ← Назад
+          {backLabel}
         </LocalizedLink>
       </div>
 
-      {SECTIONS.map((section, idx) => {
+      <StoryProgressNav sections={sections} />
+
+      {sections.map((section, idx) => {
         const isRight = idx % 2 === 1;
         return (
           <section
@@ -442,7 +477,7 @@ function StoryHtml() {
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/50"
         style={{ top: "92svh" }}
       >
-        ↓ Скролл
+        {lang === "en" ? "↓ Scroll" : "↓ Скролл"}
       </div>
     </Scroll>
   );

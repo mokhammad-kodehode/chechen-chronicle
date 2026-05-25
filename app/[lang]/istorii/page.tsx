@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/app/lib/i18n/config";
+import { getDictionary } from "@/app/lib/i18n/dictionaries";
 import { StoriesIndex } from "@/app/components/stories/StoriesIndex";
 
-export const metadata: Metadata = {
-  title: "Истории в объёме — 3D хроники",
-  description:
-    "Три главы истории Чечни в трёхмерных сценах: башня, воин, кинжал. Каждая разворачивается при скролле — текст и модель синхронны.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    title: dict.stories.metaTitle,
+    description: dict.stories.metaDescription,
+  };
+}
 
 export default async function IstoriiIndexPage({
   params,
@@ -16,5 +25,6 @@ export default async function IstoriiIndexPage({
 }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  return <StoriesIndex />;
+  const dict = await getDictionary(lang);
+  return <StoriesIndex dict={dict} />;
 }

@@ -1,141 +1,169 @@
 {
   "site": {
-    "title": "Историческая летопись",
-    "subtitle": "Чеченского народа",
-    "tagline": "Память · Земля · Голоса"
+    "title": "Historical Chronicle",
+    "subtitle": "of the Chechen People",
+    "tagline": "Memory · Land · Voices"
   },
   "nav": {
-    "home": "Главная",
-    "publications": "Публикации",
-    "archive": "Архив",
-    "stories": "Истории"
+    "home": "Home",
+    "publications": "Publications",
+    "archive": "Archive",
+    "stories": "Stories"
   },
   "home": {
     "hero": {
-      "kicker": "ИСТОРИКО-КУЛЬТУРНЫЙ АРХИВ",
+      "kicker": "HISTORICAL & CULTURAL ARCHIVE",
       "title": "Нохчийчоь",
-      "subtitle": "Хроника тысячелетий",
-      "description": "Исследуйте богатое историческое и культурное наследие — от древних времён до современности. Документальные свидетельства, карты и артефакты прошлого.",
-      "buttonStart": "НАЧАТЬ ИССЛЕДОВАНИЕ",
-      "buttonMap": "ОТКРЫТЬ КАРТУ"
+      "subtitle": "A chronicle of millennia",
+      "description": "Explore a rich historical and cultural heritage — from ancient times to the present day. Documentary evidence, maps, and artefacts of the past.",
+      "buttonStart": "BEGIN EXPLORING",
+      "buttonMap": "OPEN THE MAP"
     },
     "timeline": {
-      "title": "Хронология событий",
-      "subtitle": "Основные вехи истории региона",
-      "linkAll": "Открыть всю хронологию"
+      "title": "Timeline of events",
+      "subtitle": "Key milestones in the region's history",
+      "linkAll": "Open full timeline"
     },
     "publications": {
-      "title": "Свежие публикации",
-      "subtitle": "Исследования, эссе и архивные находки",
-      "linkAll": "Все публикации"
+      "title": "Latest publications",
+      "subtitle": "Research, essays, and archive finds",
+      "linkAll": "All publications"
     }
   },
   "publications": {
-    "metaTitle": "Публикации",
-    "metaDescription": "Исследования, эссе, архивные находки и интервью историка — авторские тексты, дополняющие хронологию.",
+    "metaTitle": "Publications",
+    "metaDescription": "Research, essays, archive finds, and historian interviews — authorial texts that complement the chronology.",
     "hero": {
-      "kicker": "ИЗ КАБИНЕТА ИСТОРИКА",
-      "title": "Публикации",
-      "description": "Исследования, эссе, архивные находки и интервью. Здесь собраны тексты, которые продолжают и уточняют материалы хронологии."
+      "kicker": "FROM THE HISTORIAN'S STUDY",
+      "title": "Publications",
+      "description": "Research, essays, archive finds, and interviews. A collection of texts that extend and refine the materials of the chronology."
     },
-    "featuredLabel": "Главная публикация",
-    "allHeading": "Все публикации",
-    "sortLabel": "Сортировка: от новых к старым",
-    "readShort": "Читать",
-    "readLong": "Читать публикацию",
-    "minutesShort": "{n} мин чтения",
+    "featuredLabel": "Featured publication",
+    "allHeading": "All publications",
+    "sortLabel": "Sort: newest first",
+    "readShort": "Read",
+    "readLong": "Read the publication",
+    "minutesShort": "{n} min read",
     "filters": {
-      "all": "Все",
-      "searchPlaceholder": "Поиск по тексту или тегам…",
-      "searchLabel": "Поиск по публикациям",
-      "found": "Найдено: {n}"
+      "all": "All",
+      "searchPlaceholder": "Search by text or tag…",
+      "searchLabel": "Search publications",
+      "found": "Found: {n}"
     },
     "empty": {
-      "text": "Ничего не найдено. Попробуйте сбросить фильтры или поменять запрос.",
-      "reset": "Сбросить"
+      "text": "Nothing found. Try resetting the filters or changing your query.",
+      "reset": "Reset"
     },
-    "back": "← Все публикации",
-    "topics": "Темы:",
-    "more": "Ещё публикации",
-    "moreLink": "Все публикации →",
-    "loadingErrorTitle": "Не удалось загрузить публикации",
-    "loadingErrorBody": "Что-то пошло не так. Попробуйте ещё раз.",
-    "openErrorTitle": "Не удалось открыть публикацию",
-    "openErrorBody": "Что-то пошло не так при загрузке. Попробуйте ещё раз.",
-    "retry": "Попробовать снова",
-    "notFoundTitle": "Публикация не найдена",
-    "notFoundBody": "Возможно, материал был перемещён или ссылка устарела.",
+    "back": "← All publications",
+    "topics": "Topics:",
+    "more": "More publications",
+    "moreLink": "All publications →",
+    "loadingErrorTitle": "Could not load publications",
+    "loadingErrorBody": "Something went wrong. Please try again.",
+    "openErrorTitle": "Could not open the publication",
+    "openErrorBody": "Something went wrong while loading. Please try again.",
+    "retry": "Try again",
+    "notFoundTitle": "Publication not found",
+    "notFoundBody": "The material may have moved or the link may be outdated.",
     "categories": {
-      "research": "Исследование",
-      "essay": "Эссе",
-      "archive": "Архивная находка",
-      "interview": "Интервью",
-      "memory": "Память"
+      "research": "Research",
+      "essay": "Essay",
+      "archive": "Archive find",
+      "interview": "Interview",
+      "memory": "Memory"
+    }
+  },
+  "stories": {
+    "metaTitle": "Volumetric stories — 3D Chronicles",
+    "metaDescription": "Three chapters of Chechnya's history rendered as 3D scenes: tower, warrior, dagger. Each unfolds as you scroll — text and model move in sync.",
+    "hero": {
+      "kicker": "3D Chronicles",
+      "title": "Volumetric stories",
+      "description": "An archive of three-dimensional stories: the dwellings, the weapons, and the people of the Caucasus. Each chapter unfolds as you scroll — text and model move in sync, the era is something to see, not just read."
+    },
+    "footerNote": "The archive grows as new 3D scans, documents and source materials surface. If you have material to share — reach out to the editors.",
+    "open": "Open",
+    "outOf": "{active} of {total} {word}",
+    "stories_one": "story",
+    "stories_few": "stories",
+    "stories_many": "stories",
+    "comingSoon": "Soon",
+    "categoriesAll": "← All categories",
+    "homeBack": "← Home",
+    "categoryAllStories": "To the beginning",
+    "chaptersPanel": "Chapters",
+    "backToBeginning": "Top",
+    "backToBeginningFull": "Back to the start",
+    "backFromStory": "← Back",
+    "featuredHint": "→ {title} · {subtitle}",
+    "openCTA": "Open all stories",
+    "preview": {
+      "kicker": "3D Chronicles"
     }
   },
   "archive": {
-    "metaTitle": "Архив",
-    "metaDescription": "Документы, фотографии, рукописи и аудиозаписи — первоисточники, на которых строятся публикации.",
+    "metaTitle": "Archive",
+    "metaDescription": "Documents, photographs, manuscripts, and audio recordings — the primary sources that underpin the publications.",
     "hero": {
-      "kicker": "ПЕРВОИСТОЧНИКИ",
-      "title": "Архив",
-      "description": "Документы, фотографии, рукописи, карты и звукозаписи. Здесь собраны материалы, на которых строятся публикации историка."
+      "kicker": "PRIMARY SOURCES",
+      "title": "Archive",
+      "description": "Documents, photographs, manuscripts, maps, and audio recordings. Here you'll find the materials on which the historian's publications are built."
     },
     "filters": {
-      "title": "Фильтры",
-      "kind": "Тип материала",
-      "language": "Язык первоисточника",
-      "place": "Место",
-      "year": "Период",
-      "reset": "Сбросить",
-      "searchLabel": "Поиск",
-      "searchPlaceholder": "Название, описание, теги…",
-      "activeLabel": "Активные фильтры:"
+      "title": "Filters",
+      "kind": "Material type",
+      "language": "Source language",
+      "place": "Place",
+      "year": "Period",
+      "reset": "Reset",
+      "searchLabel": "Search",
+      "searchPlaceholder": "Title, description, tags…",
+      "activeLabel": "Active filters:"
     },
     "kinds": {
-      "document": "Документ",
-      "photo": "Фотография",
-      "manuscript": "Рукопись",
-      "map": "Карта",
-      "audio": "Аудиозапись"
+      "document": "Document",
+      "photo": "Photograph",
+      "manuscript": "Manuscript",
+      "map": "Map",
+      "audio": "Audio recording"
     },
     "languages": {
-      "ru": "Русский",
-      "ar": "Арабский",
-      "ka": "Грузинский",
-      "ce": "Чеченский",
-      "tr": "Турецкий",
-      "other": "Другой"
+      "ru": "Russian",
+      "ar": "Arabic",
+      "ka": "Georgian",
+      "ce": "Chechen",
+      "tr": "Turkish",
+      "other": "Other"
     },
     "sort": {
-      "label": "Сортировка",
-      "newest": "Сначала новые",
-      "oldest": "Сначала старые",
-      "dateAsc": "По дате документа ↑",
-      "dateDesc": "По дате документа ↓"
+      "label": "Sort",
+      "newest": "Newest first",
+      "oldest": "Oldest first",
+      "dateAsc": "By document date ↑",
+      "dateDesc": "By document date ↓"
     },
     "empty": {
-      "title": "Ничего не найдено",
-      "text": "Попробуйте изменить фильтры или поискать иначе.",
-      "reset": "Сбросить все фильтры"
+      "title": "Nothing found",
+      "text": "Try adjusting the filters or searching differently.",
+      "reset": "Reset all filters"
     },
     "detail": {
-      "back": "← Архив",
-      "metadata": "Метаданные",
+      "back": "← Archive",
+      "metadata": "Metadata",
       "fields": {
-        "kind": "Тип",
-        "date": "Дата",
-        "place": "Место",
-        "source": "Источник",
-        "sourceCode": "Шифр",
-        "language": "Язык первоисточника",
-        "fileSize": "Размер файла"
+        "kind": "Type",
+        "date": "Date",
+        "place": "Place",
+        "source": "Source",
+        "sourceCode": "Reference code",
+        "language": "Source language",
+        "fileSize": "File size"
       },
-      "description": "Описание",
-      "tags": "Темы",
-      "relatedPublications": "Связанные публикации",
-      "download": "Скачать оригинал",
-      "viewFull": "Открыть в полном размере"
+      "description": "Description",
+      "tags": "Topics",
+      "relatedPublications": "Related publications",
+      "download": "Download original",
+      "viewFull": "Open at full size"
     }
   }
 }

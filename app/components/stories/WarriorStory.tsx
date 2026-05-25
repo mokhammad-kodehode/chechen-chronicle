@@ -13,7 +13,9 @@ import {
 } from "@react-three/drei";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import * as THREE from "three";
+import { useParams } from "next/navigation";
 import { LocalizedLink } from "@/app/components/common/LocalizedLink";
+import { StoryProgressNav } from "./StoryProgressNav";
 
 // ──────────────────────────────────────────────
 // Narrative — 4 sections. Each panel sits at top = idx * 100vh and is
@@ -27,7 +29,7 @@ type Section = {
   body: string;
 };
 
-const SECTIONS: Section[] = [
+const SECTIONS_RU: Section[] = [
   {
     id: "intro",
     kicker: "ВОИН",
@@ -54,7 +56,34 @@ const SECTIONS: Section[] = [
   },
 ];
 
-const TOTAL_PAGES = SECTIONS.length;
+const SECTIONS_EN: Section[] = [
+  {
+    id: "intro",
+    kicker: "THE WARRIOR",
+    title: "Guardian of the threshold",
+    body: "The medieval Caucasian warrior was no professional soldier — he was the defender of his clan. He grew up with the blade and the land: he knew how to plough, how to raise a tower, how to read a trail across the rocks. War came of itself — when a neighbour lost his reason, or an enemy crossed the pass.",
+  },
+  {
+    id: "code",
+    kicker: "THE CODE",
+    title: "Nokhchalla — word, bone, and shadow",
+    body: "Adat bound the warrior tighter than any armour. Never to betray a guest, never to strike the unarmed, never to leave blood without an answer. Each movement of the blade had a name in the clan; each scar a story that grandchildren would one day tell.",
+  },
+  {
+    id: "steel",
+    kicker: "STEEL",
+    title: "Shashka, dagger, long-barrel",
+    body: "Caucasian steel knew no gilding. The shashka struck without a backswing; the dagger settled a quarrel within a single step. The long-barrelled musket — a guest from the West — took its place beside the old weapons without replacing them. The warrior learned all three from childhood.",
+  },
+  {
+    id: "memory",
+    kicker: "MEMORY",
+    title: "A name the winds cannot wear away",
+    body: "The warrior died, but his name remained inscribed in the masonry of the tower and in the song. The clan remembered each one — who had fallen on the pass, who had turned aside the blow, who had silently given his last water to a brother. Their strength lies not in iron, but in the memory of a people.",
+  },
+];
+
+const TOTAL_PAGES = SECTIONS_RU.length;
 
 useGLTF.preload("/models/warrior.glb");
 
@@ -267,20 +296,26 @@ function Scene() {
 }
 
 function StoryHtml() {
+  const params = useParams();
+  const lang = typeof params?.lang === "string" ? params.lang : "ru";
+  const sections = lang === "en" ? SECTIONS_EN : SECTIONS_RU;
+  const backLabel = lang === "en" ? "← Back" : "← Назад";
   return (
     <Scroll html style={{ width: "100%" }}>
       {/* Back button positioned BELOW the global sticky header so it
           isn't hidden behind it. */}
       <div className="fixed left-4 top-20 z-50 md:left-8 md:top-24">
         <LocalizedLink
-          href="/istorii"
+          href="/istorii/warriors#stories"
           className="inline-flex items-center gap-2 rounded-full border border-amber-100/15 bg-amber-950/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/80 backdrop-blur transition hover:border-amber-100/40 hover:bg-amber-950 hover:text-white"
         >
-          ← Назад
+          {backLabel}
         </LocalizedLink>
       </div>
 
-      {SECTIONS.map((section, idx) => {
+      <StoryProgressNav sections={sections} />
+
+      {sections.map((section, idx) => {
         const isRight = idx % 2 === 1;
         return (
           <section
@@ -326,7 +361,7 @@ function StoryHtml() {
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-[11px] font-semibold uppercase tracking-widest text-amber-100/50"
         style={{ top: "92svh" }}
       >
-        ↓ Скролл
+        {lang === "en" ? "↓ Scroll" : "↓ Скролл"}
       </div>
     </Scroll>
   );

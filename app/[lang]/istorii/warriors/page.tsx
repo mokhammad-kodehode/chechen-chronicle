@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/app/lib/i18n/config";
+import { getDictionary } from "@/app/lib/i18n/dictionaries";
 import { CategoryPage } from "@/app/components/stories/CategoryPage";
 import { getCategoryBySlug } from "@/app/components/stories/storiesData";
 
@@ -17,7 +18,8 @@ export default async function WarriorsPage({
 }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const category = getCategoryBySlug("warriors");
+  const dict = await getDictionary(lang);
+  const category = getCategoryBySlug("warriors", lang);
   if (!category) notFound();
-  return <CategoryPage category={category} />;
+  return <CategoryPage category={category} dict={dict} />;
 }
