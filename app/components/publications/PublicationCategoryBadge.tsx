@@ -13,7 +13,7 @@ export function PublicationCategoryBadge({ category, size = "sm", dict }: Props)
   return (
     <span
       className={[
-        "inline-flex items-center rounded font-semibold tracking-widest uppercase",
+        "inline-flex w-fit self-start items-center rounded font-semibold tracking-widest uppercase",
         CATEGORY_BADGE[category],
         sizing,
       ].join(" ")}

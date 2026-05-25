@@ -11,12 +11,18 @@ type Props = {
   publication: Publication;
   lang: Locale;
   dict: Dictionary["publications"];
+  /** Tags the link with `?from=…` so the publication page can render
+   *  a context-aware back button (e.g., "← На главную" vs the default
+   *  "← Все публикации"). */
+  from?: string;
 };
 
-export function PublicationCard({ publication, lang, dict }: Props) {
-  const href = `/publications/${publication.slug}`;
+export function PublicationCard({ publication, lang, dict, from }: Props) {
+  const href = from
+    ? `/publications/${publication.slug}?from=${from}`
+    : `/publications/${publication.slug}`;
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-amber-900/15 bg-white shadow-sm transition hover:border-amber-900/40 hover:shadow-md">
+    <article className="group relative flex h-full flex-col overflow-hidden border border-amber-900/15 bg-white transition hover:border-amber-900/40">
       <LocalizedLink href={href} className="block">
         <div className="relative aspect-[16/10] overflow-hidden bg-amber-50">
           {publication.coverImageUrl ? (

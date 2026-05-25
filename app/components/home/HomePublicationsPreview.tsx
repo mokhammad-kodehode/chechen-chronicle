@@ -4,6 +4,12 @@ import { getAllPublications } from "@/app/lib/publications";
 import type { Dictionary } from "@/app/lib/i18n/shared";
 import type { Locale } from "@/app/lib/i18n/config";
 
+// "Свежие публикации" preview as the next manuscript spread after the
+// hero. Same parchment surface, hairline page-seam at the top, roman
+// chapter mark and ornamental divider. The card grid keeps the
+// existing PublicationCard component — only the section frame is
+// re-skinned for manuscript continuity.
+
 type Props = {
   lang: Locale;
   dict: Dictionary;
@@ -15,22 +21,46 @@ export async function HomePublicationsPreview({ lang, dict }: Props) {
   if (preview.length === 0) return null;
 
   return (
-    <section className="bg-white py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="flex flex-col items-center text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-amber-950 md:text-4xl">
-            <span className="inline-flex items-center gap-4">
-              <span className="h-px w-10 bg-amber-900/40" />
-              {dict.home.publications.title}
-              <span className="h-px w-10 bg-amber-900/40" />
-            </span>
+    <section className="relative overflow-hidden bg-[#F4EFE3] py-24 text-amber-950 md:py-32">
+      {/* Page-seam hairline */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-900/25 to-transparent"
+      />
+      {/* Subtle paper warmth */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.5]"
+        style={{
+          background:
+            "radial-gradient(circle at 75% 20%, rgba(244,231,200,0.55) 0%, transparent 55%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-6xl px-6">
+        {/* Section header — same kicker + roman numeral language as
+            the chapter index in the hero. */}
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.38em] text-amber-800/70">
+            Глава II
+          </p>
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-amber-950 md:text-5xl">
+            {dict.home.publications.title}
           </h2>
-          <p className="mt-3 text-sm italic text-amber-900/70">
+          <p className="mt-3 font-display text-base italic text-amber-800/80 md:text-lg">
             {dict.home.publications.subtitle}
           </p>
+
+          {/* Ornament divider */}
+          <div className="mt-8 flex w-full max-w-[180px] items-center gap-3 text-amber-900/35">
+            <span className="h-px flex-1 bg-current" />
+            <span className="font-display text-[12px] tracking-[0.5em]">⁂</span>
+            <span className="h-px flex-1 bg-current" />
+          </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Card grid */}
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 md:mt-20">
           {preview.map((p) => (
             <PublicationCard
               key={p.id}
@@ -41,27 +71,19 @@ export async function HomePublicationsPreview({ lang, dict }: Props) {
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center">
+        {/* "Все публикации →" — editorial CTA, no boxy button */}
+        <div className="mt-16 flex justify-center">
           <LocalizedLink
             href="/publications"
-            className="group inline-flex h-11 items-center justify-center gap-2 rounded border border-amber-900/60 bg-white px-6 text-sm font-semibold text-amber-900 transition hover:bg-amber-50"
+            className="group/cta inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-amber-900 transition-colors duration-300 hover:text-amber-950"
           >
-            {dict.home.publications.linkAll}
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="transition group-hover:translate-x-0.5"
+            <span>{dict.home.publications.linkAll}</span>
+            <span
               aria-hidden
+              className="inline-block transition-transform duration-300 group-hover/cta:translate-x-1.5"
             >
-              <path d="M5 12h14" />
-              <path d="M13 5l7 7-7 7" />
-            </svg>
+              →
+            </span>
           </LocalizedLink>
         </div>
       </div>

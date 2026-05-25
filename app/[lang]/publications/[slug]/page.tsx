@@ -41,8 +41,10 @@ export async function generateMetadata({
 
 export default async function PublicationPage({
   params,
+  searchParams,
 }: {
   params: Promise<Params>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { lang, slug } = await params;
   if (!isLocale(lang)) notFound();
@@ -51,6 +53,15 @@ export default async function PublicationPage({
 
   const dict = await getDictionary(lang as Locale);
   const related = await getRelatedPublications(slug);
+
+  // Context-aware back link: arrived from the home page (link tagged
+  // ?from=home) → "← На главную". Otherwise → "← Все публикации".
+  const { from } = await searchParams;
+  const fromHome = from === "home";
+  const backHref = fromHome ? "/" : "/publications";
+  const backLabel = fromHome
+    ? dict.publications.homeBack
+    : dict.publications.back;
 
   return (
     <>
@@ -82,10 +93,10 @@ export default async function PublicationPage({
 
         <div className="animate-fade-fast relative mx-auto max-w-3xl px-4 py-20 md:py-28">
           <LocalizedLink
-            href="/publications"
+            href={backHref}
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-amber-100/80 hover:text-white"
           >
-            {dict.publications.back}
+            {backLabel}
           </LocalizedLink>
 
           <div className="mt-6">

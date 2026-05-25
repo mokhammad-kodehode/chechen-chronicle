@@ -1,29 +1,39 @@
 import { LocalizedLink } from "@/app/components/common/LocalizedLink";
 import { Reveal } from "@/app/components/common/Reveal";
-import { TimelineItemCard, TimelineItem } from "@/app/components/timeline/TimelineItemCard";
 import type { Dictionary } from "@/app/lib/i18n/shared";
 
-const items: TimelineItem[] = [
+// "Из хроники" — closing manuscript spread of the home page.
+//
+// Three timeline entries laid out as an editorial chronicle: thin
+// hairlines separating each entry, big serif year label on the left,
+// title + body on the right. No card chrome — feels like the entries
+// in a printed almanac.
+
+type Item = {
+  id: string;
+  yearLabel: string;
+  title: string;
+  text: string;
+};
+
+const ITEMS: Item[] = [
   {
     id: "ancient",
-    yearLabel: "VIII–VII вв. до н.э.",
+    yearLabel: "VIII–VII в. до н.э.",
     title: "Древние поселения",
-    text: "Археологические находки свидетельствуют о присутствии древних племён на территории Кавказа. Первые поселения в горных районах, развитие земледелия и скотоводства.",
-    side: "left",
+    text: "Археологические находки свидетельствуют о присутствии древних племён на Кавказе. Первые поселения в горах, развитие земледелия и скотоводства.",
   },
   {
     id: "early-medieval",
-    yearLabel: "V–X века н.э.",
+    yearLabel: "V–X в. н.э.",
     title: "Раннее средневековье",
-    text: "Формирование местных племенных союзов. Влияние Великого шёлкового пути на развитие торговли и культурных связей.",
-    side: "right",
+    text: "Формирование местных племенных союзов. Влияние Великого шёлкового пути на торговлю и культурные связи.",
   },
   {
     id: "towers",
-    yearLabel: "XIII–XV века",
+    yearLabel: "XIII–XV в.",
     title: "Эпоха башенной архитектуры",
     text: "Расцвет строительства каменных башен и укреплений. Формирование тейповой системы общественного устройства.",
-    side: "left",
   },
 ];
 
@@ -33,75 +43,81 @@ type Props = {
 
 export function HomeTimelinePreview({ dict }: Props) {
   return (
-    <section className="bg-[#FBF7F0] py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-amber-950 md:text-4xl">
-            <span className="inline-flex items-center gap-4">
-              <span className="h-px w-10 bg-amber-900/40" />
-              {dict.title}
-              <span className="h-px w-10 bg-amber-900/40" />
-            </span>
+    <section className="relative overflow-hidden bg-[#F4EFE3] py-24 text-amber-950 md:py-32">
+      {/* Page-seam hairline */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-900/25 to-transparent"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.5]"
+        style={{
+          background:
+            "radial-gradient(circle at 25% 80%, rgba(244,231,200,0.6) 0%, transparent 55%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-4xl px-6">
+        {/* Section header — same vocabulary as the publications spread */}
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.38em] text-amber-800/70">
+            Глава IV
+          </p>
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-amber-950 md:text-5xl">
+            {dict.title}
           </h2>
-          <p className="mt-3 text-sm italic text-amber-900/70">{dict.subtitle}</p>
+          <p className="mt-3 font-display text-base italic text-amber-800/80 md:text-lg">
+            {dict.subtitle}
+          </p>
+
+          <div className="mt-8 flex w-full max-w-[180px] items-center gap-3 text-amber-900/35">
+            <span className="h-px flex-1 bg-current" />
+            <span className="font-display text-[12px] tracking-[0.5em]">⁂</span>
+            <span className="h-px flex-1 bg-current" />
+          </div>
         </div>
 
-        <div className="relative mt-16">
-          <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-amber-900/20 md:block" />
+        {/* Chronicle entries — editorial list, hairline separators,
+            no card chrome. Year on the left rail, body on the right. */}
+        <ul className="mt-16 divide-y divide-amber-900/15 border-y border-amber-900/15">
+          {ITEMS.map((item, idx) => (
+            <li key={item.id}>
+              <Reveal delay={idx * 100}>
+                <div className="grid grid-cols-1 gap-3 px-2 py-8 md:grid-cols-[180px_1fr] md:gap-10 md:px-4 md:py-10">
+                  {/* Year label — serif, faded, sits like a margin note */}
+                  <p className="font-display text-xl font-semibold leading-tight tracking-tight text-amber-800/65 md:text-2xl">
+                    {item.yearLabel}
+                  </p>
 
-          <div className="space-y-16 md:space-y-20">
-            {items.map((item, idx) => {
-              const isRight = item.side === "right";
-
-              return (
-                <div key={item.id} className="relative">
-                  <div className="absolute left-1/2 top-8 hidden -translate-x-1/2 md:block">
-                    <div className="h-2.5 w-2.5 rounded-full bg-amber-900" />
-                    <div className="mx-auto mt-2 h-5 w-px bg-amber-900/25" />
-                  </div>
-
-                  {/* Desktop: two-column timeline */}
-                  <div className="hidden md:grid md:grid-cols-2 md:gap-10">
-                    <div className={isRight ? "md:col-start-1 md:opacity-0" : "md:col-start-1"}>
-                      {!isRight && (
-                        <Reveal delay={idx * 80} from="left">
-                          <div className="flex md:justify-end">
-                            <TimelineItemCard item={item} />
-                          </div>
-                        </Reveal>
-                      )}
-                    </div>
-
-                    <div className={isRight ? "md:col-start-2" : "md:col-start-2 md:opacity-0"}>
-                      {isRight && (
-                        <Reveal delay={idx * 80} from="right">
-                          <div className="flex md:justify-start">
-                            <TimelineItemCard item={item} />
-                          </div>
-                        </Reveal>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Mobile: single column */}
-                  <div className="md:hidden">
-                    <Reveal delay={idx * 80} from="up">
-                      <TimelineItemCard item={item} />
-                    </Reveal>
+                  <div className="min-w-0">
+                    <h3 className="font-display text-2xl font-semibold leading-tight tracking-tight text-amber-950 md:text-3xl">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-[15px] leading-[1.65] text-amber-900/75 md:text-base md:leading-[1.7]">
+                      {item.text}
+                    </p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
 
-          <div className="mt-14 text-center">
-            <LocalizedLink
-              href="/timeline"
-              className="inline-flex h-11 items-center justify-center rounded border border-amber-900/60 bg-white px-6 text-sm font-semibold text-amber-900 hover:bg-white/80"
+        {/* "Открыть всю хронологию →" — editorial link */}
+        <div className="mt-14 flex justify-center">
+          <LocalizedLink
+            href="/timeline"
+            className="group/cta inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-amber-900 transition-colors duration-300 hover:text-amber-950"
+          >
+            <span>{dict.linkAll}</span>
+            <span
+              aria-hidden
+              className="inline-block transition-transform duration-300 group-hover/cta:translate-x-1.5"
             >
-              {dict.linkAll}
-            </LocalizedLink>
-          </div>
+              →
+            </span>
+          </LocalizedLink>
         </div>
       </div>
     </section>

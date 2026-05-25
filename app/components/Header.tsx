@@ -18,6 +18,7 @@ export function Header({ dict }: Props) {
     { href: "/istorii", label: dict.nav.stories },
     { href: "/publications", label: dict.nav.publications },
     { href: "/archive", label: dict.nav.archive },
+    { href: "/about", label: dict.nav.about },
   ];
 
   return (
@@ -29,8 +30,9 @@ export function Header({ dict }: Props) {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-900/25 to-transparent"
       />
 
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 md:px-6">
-        {/* Brand mark + stacked wordmark */}
+      <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 md:px-6">
+        {/* Brand mark + stacked wordmark (desktop only — on mobile
+            we centre the wordmark separately, see below) */}
         <LocalizedLink
           href="/"
           className="group/brand flex items-center gap-3 transition-opacity duration-300 hover:opacity-90"
@@ -57,6 +59,22 @@ export function Header({ dict }: Props) {
             <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-amber-900/65">
               {dict.site.subtitle}
             </span>
+          </span>
+        </LocalizedLink>
+
+        {/* Mobile-only centred wordmark. Absolutely positioned so
+            it doesn't disturb the flex justify-between layout of
+            the monogram (left) + burger (right). pointer-events-none
+            so the X monogram remains the active "home" tap target. */}
+        <LocalizedLink
+          href="/"
+          className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center leading-tight sm:hidden"
+        >
+          <span className="font-display text-[13px] font-semibold tracking-tight text-amber-950">
+            {dict.site.title}
+          </span>
+          <span className="text-[9px] font-semibold uppercase tracking-[0.28em] text-amber-900/65">
+            {dict.site.subtitle}
           </span>
         </LocalizedLink>
 

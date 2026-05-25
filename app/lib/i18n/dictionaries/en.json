@@ -8,7 +8,8 @@
     "home": "Home",
     "publications": "Publications",
     "archive": "Archive",
-    "stories": "Stories"
+    "stories": "Stories",
+    "about": "About"
   },
   "home": {
     "hero": {
@@ -17,7 +18,33 @@
       "subtitle": "A chronicle of millennia",
       "description": "Explore a rich historical and cultural heritage — from ancient times to the present day. Documentary evidence, maps, and artefacts of the past.",
       "buttonStart": "BEGIN EXPLORING",
-      "buttonMap": "OPEN THE MAP"
+      "buttonMap": "OPEN THE MAP",
+      "volume": "Volume I · MMXXV",
+      "dateline": "An open archive of culture and memory"
+    },
+    "manifesto": {
+      "heading": "From the editors",
+      "paragraph1": "This chronicle gathers the voice of a land that neither wars nor oblivion could silence. The towers remember the names of clans. The blades are passed down with a name. The pages are written by generations of historians.",
+      "paragraph2": "Three forms of memory live here: text, artefact, and volume. Essays and research in Publications; manuscripts, maps and photographs in the Archive; towers and weapons in the three-dimensional Chronicles.",
+      "signature": "— The Editors"
+    },
+    "chapters": {
+      "heading": "In this volume",
+      "publications": {
+        "numeral": "I",
+        "name": "Publications",
+        "description": "Essays, research, and archive finds."
+      },
+      "archive": {
+        "numeral": "II",
+        "name": "Archive",
+        "description": "Primary sources: documents, photographs, manuscripts, maps, audio."
+      },
+      "stories": {
+        "numeral": "III",
+        "name": "3D Chronicles",
+        "description": "Volumetric stories: towers, weapons, warriors."
+      }
     },
     "timeline": {
       "title": "Timeline of events",
@@ -55,6 +82,7 @@
       "reset": "Reset"
     },
     "back": "← All publications",
+    "homeBack": "← Home",
     "topics": "Topics:",
     "more": "More publications",
     "moreLink": "All publications →",
