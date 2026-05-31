@@ -15,8 +15,11 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const publication = await getPublicationBySlug(slug);
+  const { lang, slug } = await params;
+  const publication = await getPublicationBySlug(
+    slug,
+    isLocale(lang) ? lang : "ru"
+  );
   if (!publication) return { title: "Не найдено" };
   return {
     title: `${publication.title} — 3D-просмотр`,
@@ -31,7 +34,7 @@ export default async function Publication3DPage({
 }) {
   const { lang, slug } = await params;
   if (!isLocale(lang)) notFound();
-  const publication = await getPublicationBySlug(slug);
+  const publication = await getPublicationBySlug(slug, lang as Locale);
   if (!publication) notFound();
   if (!publication.enable3DView) notFound();
 

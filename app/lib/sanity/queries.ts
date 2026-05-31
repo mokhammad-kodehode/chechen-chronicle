@@ -4,20 +4,23 @@ const PUBLICATION_FIELDS = groq`
   _id,
   "slug": slug.current,
   title,
+  titleEn,
   excerpt,
+  excerptEn,
   coverImage,
   "coverImageLqip": coverImage.asset->metadata.lqip,
   "coverImageDimensions": coverImage.asset->metadata.dimensions{width, height},
   "author": author->{
     name,
+    nameEn,
     role,
+    roleEn,
     avatar,
   },
   publishedAt,
   readingTimeMinutes,
   category,
   tags,
-  featured,
   enable3DView,
   "model3dUrl": model3d.asset->url,
 `;
@@ -28,17 +31,23 @@ export const ALL_PUBLICATIONS_QUERY = groq`
   }
 `;
 
-export const FEATURED_PUBLICATION_QUERY = groq`
-  *[_type == "publication" && featured == true && defined(slug.current)]
-    | order(publishedAt desc)[0] {
-      ${PUBLICATION_FIELDS}
-    }
+// Home curation lives in the homeSettings singleton: a single `featured`
+// reference (the banner) and an ordered `pinned` array (the front-page
+// slots). Both are references, not booleans on the content, so curation
+// stays a one-place, drag-to-reorder decision. The lib layer falls back
+// to latest / newest-first when nothing is curated.
+export const HOME_SETTINGS_QUERY = groq`
+  *[_type == "homeSettings"][0]{
+    "featured": featured->{ ${PUBLICATION_FIELDS} },
+    "pinnedIds": pinned[]->_id
+  }
 `;
 
 export const PUBLICATION_BY_SLUG_QUERY = groq`
   *[_type == "publication" && slug.current == $slug][0] {
     ${PUBLICATION_FIELDS}
     body,
+    bodyEn,
   }
 `;
 

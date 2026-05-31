@@ -12,6 +12,12 @@ export const person = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "nameEn",
+      title: "Имя (EN)",
+      description: "Английское написание имени; показывается на /en.",
+      type: "string",
+    }),
+    defineField({
       name: "slug",
       title: "URL",
       type: "slug",
@@ -22,6 +28,11 @@ export const person = defineType({
       name: "role",
       title: "Роль / должность",
       description: 'Например: "Историк, исследователь Кавказа"',
+      type: "string",
+    }),
+    defineField({
+      name: "roleEn",
+      title: "Роль / должность (EN)",
       type: "string",
     }),
     defineField({

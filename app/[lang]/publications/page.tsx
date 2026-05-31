@@ -7,12 +7,11 @@ export const revalidate = 60;
 import {
   getAllCategories,
   getAllPublications,
-  getFeaturedPublication,
+  getHomeCuration,
 } from "@/app/lib/publications";
 import { getDictionary } from "@/app/lib/i18n/dictionaries";
 import { isLocale, type Locale } from "@/app/lib/i18n/config";
-import { PublicationsHero } from "@/app/components/publications/PublicationsHero";
-import { PublicationFeaturedCard } from "@/app/components/publications/PublicationFeaturedCard";
+import { FeaturedBanner } from "@/app/components/publications/FeaturedBanner";
 import { PublicationsList } from "@/app/components/publications/PublicationsList";
 
 export async function generateMetadata({
@@ -38,29 +37,26 @@ export default async function PublicationsPage({
   if (!isLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);
 
-  const [featured, all, categories] = await Promise.all([
-    getFeaturedPublication(),
-    getAllPublications(),
+  const [curation, all, categories] = await Promise.all([
+    getHomeCuration(lang as Locale),
+    getAllPublications(lang as Locale),
     getAllCategories(),
   ]);
+  const featured = curation.featured ?? all[0];
   const restOfList = featured ? all.filter((p) => p.id !== featured.id) : all;
 
   return (
     <>
-      <PublicationsHero dict={dict.publications.hero} />
+      {featured ? (
+        <FeaturedBanner
+          publication={featured}
+          lang={lang as Locale}
+          dict={dict.publications}
+        />
+      ) : null}
 
       <section className="animate-fade-fast bg-white py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4">
-          {featured ? (
-            <div className="mb-16">
-              <PublicationFeaturedCard
-                publication={featured}
-                lang={lang as Locale}
-                dict={dict.publications}
-              />
-            </div>
-          ) : null}
-
           <div className="mb-8 flex items-end justify-between gap-4">
             <h2 className="text-2xl font-semibold tracking-tight text-amber-950 md:text-3xl">
               {dict.publications.allHeading}

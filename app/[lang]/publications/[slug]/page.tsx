@@ -30,8 +30,11 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const publication = await getPublicationBySlug(slug);
+  const { lang, slug } = await params;
+  const publication = await getPublicationBySlug(
+    slug,
+    isLocale(lang) ? lang : "ru"
+  );
   if (!publication) return { title: "Публикация не найдена" };
   return {
     title: publication.title,
@@ -48,11 +51,11 @@ export default async function PublicationPage({
 }) {
   const { lang, slug } = await params;
   if (!isLocale(lang)) notFound();
-  const publication = await getPublicationBySlug(slug);
+  const publication = await getPublicationBySlug(slug, lang as Locale);
   if (!publication) notFound();
 
   const dict = await getDictionary(lang as Locale);
-  const related = await getRelatedPublications(slug);
+  const related = await getRelatedPublications(slug, lang as Locale);
 
   // Context-aware back link: arrived from the home page (link tagged
   // ?from=home) → "← На главную". Otherwise → "← Все публикации".

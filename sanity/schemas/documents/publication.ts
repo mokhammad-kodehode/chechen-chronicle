@@ -16,6 +16,7 @@ export const publication = defineType({
     { name: "main", title: "Основное", default: true },
     { name: "meta", title: "Автор и даты" },
     { name: "body", title: "Тело" },
+    { name: "en", title: "Перевод (EN)" },
   ],
   fields: [
     defineField({
@@ -74,15 +75,6 @@ export const publication = defineType({
       group: "main",
     }),
     defineField({
-      name: "featured",
-      title: "Закреплено сверху",
-      description: "Показывается крупной карточкой над списком",
-      type: "boolean",
-      initialValue: false,
-      group: "main",
-    }),
-
-    defineField({
       name: "author",
       title: "Автор",
       type: "reference",
@@ -112,6 +104,30 @@ export const publication = defineType({
       title: "Тело статьи",
       type: "blockContent",
       group: "body",
+    }),
+
+    // English translation (transcreation). Rendered on /en with a
+    // fallback to the Russian fields when a translation is empty.
+    defineField({
+      name: "titleEn",
+      title: "Title (EN)",
+      type: "string",
+      group: "en",
+      validation: (Rule) => Rule.max(200),
+    }),
+    defineField({
+      name: "excerptEn",
+      title: "Excerpt (EN)",
+      type: "text",
+      rows: 3,
+      group: "en",
+      validation: (Rule) => Rule.max(400),
+    }),
+    defineField({
+      name: "bodyEn",
+      title: "Body (EN)",
+      type: "blockContent",
+      group: "en",
     }),
 
     // 3D viewer

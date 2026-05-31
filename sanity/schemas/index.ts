@@ -5,6 +5,7 @@ import { person } from "./documents/person";
 import { publication } from "./documents/publication";
 import { place } from "./documents/place";
 import { archiveItem } from "./documents/archiveItem";
+import { homeSettings } from "./documents/homeSettings";
 
 export const schemaTypes = [
   // Objects
@@ -13,6 +14,7 @@ export const schemaTypes = [
   blockContent,
 
   // Documents
+  homeSettings,
   person,
   publication,
   place,

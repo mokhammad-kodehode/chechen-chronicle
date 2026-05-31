@@ -2,13 +2,15 @@ import Image from "next/image";
 import { LocalizedLink } from "../common/LocalizedLink";
 import { PublicationCard } from "@/app/components/publications/PublicationCard";
 import { PublicationCategoryBadge } from "@/app/components/publications/PublicationCategoryBadge";
+import { FeaturedBanner } from "@/app/components/publications/FeaturedBanner";
 import {
+  arrangeForHome,
+  contentDepth,
   formatPublicationDate,
   getAllPublications,
-  getFeaturedPublication,
+  getHomeCuration,
   type Publication,
 } from "@/app/lib/publications";
-import { withStubs } from "@/app/lib/publications-stub";
 import type { Locale } from "@/app/lib/i18n/config";
 import type { Dictionary } from "@/app/lib/i18n/shared";
 
@@ -16,26 +18,21 @@ import type { Dictionary } from "@/app/lib/i18n/shared";
 // Heavier copy (longer title + excerpt) earns a wider tile so the
 // layout breathes around long reads and packs short notes tightly.
 function spanForCard(p: Publication): string {
-  const weight = p.title.length * 1.5 + (p.excerpt?.length ?? 0);
-  return weight > 180 ? "lg:col-span-6" : "lg:col-span-3";
+  return contentDepth(p) > 180 ? "lg:col-span-6" : "lg:col-span-3";
 }
 
 
-// Home page front — newspaper A1 (NYT-style).
+// Home page front — newspaper A1 (NYT-style). Three stacked sections:
 //
-//   I.  FRONT PAGE   — three-column spread on lg+:
-//                       LEFT  (3/12)  main story text + sub-stories
-//                       CENTRE (6/12) huge cover image of main story
-//                       RIGHT (3/12)  secondary story image + sub-story
-//                      Mobile/tablet: stacks to a single column.
-//   II. BENTO        — asymmetric grid of additional publications
-//                       (only rendered when ≥3 extras exist beyond
-//                       what's already on the front page).
-//   III. TEASERS     — two side panels: Archive + 3D Chronicles.
+//   I.   FEATURED BANNER — the `featured` publication as a big cover +
+//        headline spread. The only section on cream parchment.
+//   II.  A1 SPREAD       — main column (2 stacked main posts) + a right
+//        sidebar (one image-led "top" post, then compact items), with
+//        an adaptive bento grid of extras and an "all publications"
+//        link below. Rendered on white.
+//   III. SIDE TEASERS    — two panels linking to Archive + 3D stories.
 //
-// Cream parchment colour is reserved for the front-page banner; the
-// rest of the page sits on white. The slower manuscript identity
-// spread lives on /about.
+// The slower manuscript identity spread lives on /about.
 
 type Props = {
   lang: Locale;
@@ -45,57 +42,36 @@ type Props = {
 export async function HomeHero({ lang, dict }: Props) {
   // Banner gets the explicit "featured" pub (or the latest). Below
   // the banner, an A1 newspaper spread:
-  //   pageMain   → its TEXT lives in the left column and its IMAGE
-  //                lives in the centre. Both wrapped in one <article>
-  //                with a shared hover, so the reader sees ONE post.
+  //   mainPosts  → 2 stacked posts in the wide left column; each is one
+  //                <article> (text + cover image) with a shared hover.
   //   smallPosts → 3–4 compact items stacked in the right sidebar,
   //                separated from the main story by a vertical hairline.
   //   bentoExtras→ remaining publications shown in an adaptive bento
   //                grid below a horizontal hairline. Long-copy posts
   //                earn a wider tile so the layout breathes naturally.
-  const real = await getAllPublications();
-  const all = withStubs(real);
-  const fromFeaturedFlag = await getFeaturedPublication();
-  const banner = fromFeaturedFlag ?? all[0];
-  const afterBanner = banner ? all.filter((p) => p.id !== banner.id) : all;
-  const mainPosts = afterBanner.slice(0, 2);
-  const smallPosts = afterBanner.slice(2, 6);
-  const bentoExtras = afterBanner.slice(6, 12);
+  const [real, curation] = await Promise.all([
+    getAllPublications(lang),
+    getHomeCuration(lang),
+  ]);
+  const { banner, mainPosts, smallPosts, bentoExtras } = arrangeForHome(
+    real,
+    curation.featured,
+    curation.pinnedIds
+  );
 
   const pubsDict = dict.publications;
   const homePubs = dict.home.publications;
 
   return (
     <>
-      {/* ── I. FEATURED BANNER — original spread restored: big cover
-            image left, big Playfair headline + lede right. Only this
-            section keeps the cream parchment colour. */}
+      {/* ── I. FEATURED BANNER — shared with the publications page. */}
       {banner ? (
-        <section className="relative overflow-hidden bg-[#F4EFE3] text-amber-950">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.55]"
-            style={{
-              background:
-                "radial-gradient(circle at 20% 15%, rgba(244,231,200,0.6) 0%, transparent 55%), radial-gradient(circle at 80% 85%, rgba(180,130,80,0.08) 0%, transparent 45%)",
-            }}
-          />
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-900/30 to-transparent"
-          />
-
-          <div className="relative mx-auto max-w-7xl px-6 pt-6 md:pt-8">
-            <FeaturedSpread
-              publication={banner}
-              lang={lang}
-              readLabel={pubsDict.readLong}
-              featuredLabel={pubsDict.featuredLabel}
-              minutesTemplate={pubsDict.minutesShort}
-              categoriesDict={pubsDict.categories}
-            />
-          </div>
-        </section>
+        <FeaturedBanner
+          publication={banner}
+          lang={lang}
+          dict={pubsDict}
+          from="home"
+        />
       ) : null}
 
       {/* ── II. NYT A1 SPREAD — LEFT column stacks 2 main posts
@@ -146,7 +122,6 @@ export async function HomeHero({ lang, dict }: Props) {
                       key={p.id}
                       publication={p}
                       minutesTemplate={pubsDict.minutesShort}
-                      categoriesDict={pubsDict.categories}
                     />
                   ))}
                 </div>
@@ -199,14 +174,14 @@ export async function HomeHero({ lang, dict }: Props) {
               title={dict.archive.hero.title}
               description={dict.archive.hero.description}
               href="/archive"
-              linkLabel={dict.archive.detail.back.replace(/^←\s*/, "") + " →"}
+              linkLabel={dict.nav.archive}
             />
             <TeaserPanel
               kicker={dict.stories.hero.kicker}
               title={dict.stories.hero.title}
               description={dict.stories.hero.description}
               href="/istorii"
-              linkLabel={dict.stories.openCTA + " →"}
+              linkLabel={dict.stories.openCTA}
             />
           </div>
         </div>
@@ -214,108 +189,6 @@ export async function HomeHero({ lang, dict }: Props) {
     </>
   );
 }
-
-// ──────────────────────────────────────────────────────────────────
-// FEATURED SPREAD — the big banner at the top of the home page.
-// Cover image on the left (desktop) alongside the editorial block
-// (kicker chip + big serif headline + italic excerpt + meta + read).
-// Lives on cream parchment.
-// ──────────────────────────────────────────────────────────────────
-
-function FeaturedSpread({
-  publication: p,
-  lang,
-  readLabel,
-  featuredLabel,
-  minutesTemplate,
-  categoriesDict,
-}: {
-  publication: Publication;
-  lang: Locale;
-  readLabel: string;
-  featuredLabel: string;
-  minutesTemplate: string;
-  categoriesDict: Dictionary["publications"]["categories"];
-}) {
-  const href = `/publications/${p.slug}?from=home`;
-  const date = formatPublicationDate(p.publishedAt, lang);
-  const minutes = minutesTemplate.replace("{n}", String(p.readingTimeMinutes));
-
-  return (
-    <article className="grid grid-cols-1 gap-8 pt-6 pb-12 md:grid-cols-[1.15fr_1fr] md:gap-12 md:pt-8 md:pb-16">
-      <LocalizedLink
-        href={href}
-        className="group/cover relative block aspect-[4/3] overflow-hidden bg-amber-100/40 md:aspect-[4/5]"
-      >
-        {p.coverImageUrl ? (
-          <Image
-            src={p.coverImageUrl}
-            alt={p.coverImageAlt ?? p.title}
-            fill
-            priority
-            sizes="(min-width: 1024px) 55vw, 100vw"
-            className="object-cover transition duration-[1200ms] ease-out group-hover/cover:scale-[1.025]"
-            {...(p.coverImageLqip
-              ? {
-                  placeholder: "blur" as const,
-                  blurDataURL: p.coverImageLqip,
-                }
-              : {})}
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-amber-100 via-stone-100 to-amber-50 text-amber-900/40">
-            <span className="h-3 w-3 rotate-45 bg-amber-900/30" />
-          </div>
-        )}
-      </LocalizedLink>
-
-      <div className="flex flex-col justify-center">
-        <div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-amber-800/85 md:text-[11px]">
-          <span className="rounded-full border border-amber-800/40 px-2.5 py-1">
-            {featuredLabel}
-          </span>
-          <PublicationCategoryBadge category={p.category} dict={categoriesDict} />
-        </div>
-
-        <LocalizedLink href={href} className="group/title mt-5 block">
-          <h1 className="font-display text-[32px] font-semibold leading-[1.05] tracking-tight text-amber-950 transition-colors duration-300 group-hover/title:text-amber-900 sm:text-[42px] md:text-[52px]">
-            {p.title}
-          </h1>
-        </LocalizedLink>
-
-        <p className="mt-4 font-display text-base italic leading-[1.5] text-amber-800/85 md:text-lg">
-          {p.excerpt}
-        </p>
-
-        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] uppercase tracking-[0.22em] text-amber-900/70 md:text-[11px]">
-          <span className="font-semibold text-amber-900">{p.author.name}</span>
-          <span aria-hidden className="h-1 w-1 rounded-full bg-amber-900/30" />
-          <span>{date}</span>
-          <span aria-hidden className="h-1 w-1 rounded-full bg-amber-900/30" />
-          <span>{minutes}</span>
-        </div>
-
-        <LocalizedLink
-          href={href}
-          className="group/read mt-8 inline-flex items-center gap-3 self-start text-[11px] font-semibold uppercase tracking-[0.3em] text-amber-900 transition-colors duration-300 hover:text-amber-950"
-        >
-          <span>{readLabel}</span>
-          <span
-            aria-hidden
-            className="transition-transform duration-300 group-hover/read:translate-x-1.5"
-          >
-            →
-          </span>
-        </LocalizedLink>
-      </div>
-    </article>
-  );
-}
-
-// ──────────────────────────────────────────────────────────────────
-// TEASER PANEL — one of the two side cards (Archive / 3D Stories).
-// Editorial, on cream, divided by hairlines.
-// ──────────────────────────────────────────────────────────────────
 
 // ──────────────────────────────────────────────────────────────────
 // MAIN POST — text column (LEFT) + image column (CENTRE) of the A1
@@ -415,12 +288,6 @@ function MainPost({
 }
 
 // ──────────────────────────────────────────────────────────────────
-// SMALL POST — compact text-only item in the right sidebar. Kicker
-// badge + serif headline + brief excerpt + minutes. A hairline above
-// (except for the first item) separates entries vertically.
-// ──────────────────────────────────────────────────────────────────
-
-// ──────────────────────────────────────────────────────────────────
 // TOP SIDEBAR POST — first item in the right sidebar, NYT-style:
 // big top image, category, headline, brief excerpt, minutes. Acts
 // as the anchor of the sidebar.
@@ -489,11 +356,9 @@ function TopSidebarPost({
 function CompactPost({
   publication: p,
   minutesTemplate,
-  categoriesDict: _categoriesDict,
 }: {
   publication: Publication;
   minutesTemplate: string;
-  categoriesDict: Dictionary["publications"]["categories"];
 }) {
   const href = `/publications/${p.slug}?from=home`;
   const minutes = minutesTemplate.replace("{n}", String(p.readingTimeMinutes));
@@ -541,6 +406,12 @@ function CompactPost({
   );
 }
 
+// ──────────────────────────────────────────────────────────────────
+// TEASER PANEL — one of the two side cards (Archive / 3D Stories).
+// On white, separated by a hairline gap. Callers pass a plain label;
+// the panel renders the trailing arrow itself.
+// ──────────────────────────────────────────────────────────────────
+
 function TeaserPanel({
   kicker,
   title,
@@ -569,7 +440,7 @@ function TeaserPanel({
         {description}
       </p>
       <span className="mt-auto inline-flex items-center gap-2 pt-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-amber-900 md:text-[11px]">
-        <span>{linkLabel.replace(/\s*→\s*$/, "")}</span>
+        <span>{linkLabel}</span>
         <span
           aria-hidden
           className="transition-transform duration-300 group-hover/teaser:translate-x-1.5"

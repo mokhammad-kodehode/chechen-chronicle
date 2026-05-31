@@ -1,4 +1,3 @@
-import { LocalizedLink } from "@/app/components/common/LocalizedLink";
 import { Reveal } from "@/app/components/common/Reveal";
 import type { Dictionary } from "@/app/lib/i18n/shared";
 
@@ -103,22 +102,6 @@ export function HomeTimelinePreview({ dict }: Props) {
             </li>
           ))}
         </ul>
-
-        {/* "Открыть всю хронологию →" — editorial link */}
-        <div className="mt-14 flex justify-center">
-          <LocalizedLink
-            href="/timeline"
-            className="group/cta inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-amber-900 transition-colors duration-300 hover:text-amber-950"
-          >
-            <span>{dict.linkAll}</span>
-            <span
-              aria-hidden
-              className="inline-block transition-transform duration-300 group-hover/cta:translate-x-1.5"
-            >
-              →
-            </span>
-          </LocalizedLink>
-        </div>
       </div>
     </section>
   );

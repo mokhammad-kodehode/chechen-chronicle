@@ -149,9 +149,7 @@ function CategoryDoor({
             active: "",
             total,
             word: pickStoryWord(total, labels),
-          })
-            .replace(/^\s+/, "")
-            .trim()}
+          }).trim()}
         </div>
 
         <div className="mt-5 flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-200">
@@ -178,13 +176,4 @@ function pickStoryWord(n: number, labels: StoriesLabels): string {
   if (last === 1) return labels.stories_one;
   if (last >= 2 && last <= 4) return labels.stories_few;
   return labels.stories_many;
-}
-
-function wordForStories(n: number): string {
-  const lastTwo = n % 100;
-  if (lastTwo >= 11 && lastTwo <= 14) return "историй";
-  const last = n % 10;
-  if (last === 1) return "истории";
-  if (last >= 2 && last <= 4) return "историй";
-  return "историй";
 }
