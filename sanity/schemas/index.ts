@@ -6,6 +6,8 @@ import { publication } from "./documents/publication";
 import { place } from "./documents/place";
 import { archiveItem } from "./documents/archiveItem";
 import { homeSettings } from "./documents/homeSettings";
+import { familyStory } from "./documents/familyStory";
+import { familySubmissionContact } from "./documents/familySubmissionContact";
 
 export const schemaTypes = [
   // Objects
@@ -19,4 +21,6 @@ export const schemaTypes = [
   publication,
   place,
   archiveItem,
+  familyStory,
+  familySubmissionContact,
 ];

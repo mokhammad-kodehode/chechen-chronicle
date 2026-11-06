@@ -6,12 +6,11 @@ import type { Dictionary } from "@/app/lib/i18n/shared";
 //
 //   I.  TITLE SPREAD     — frontispiece: volume + giant Playfair title.
 //   II. EDITOR'S LETTER  — two-column manifesto with a drop cap.
-//   III. CHAPTER INDEX   — table of contents linking to Publications,
-//                          Archive and 3D Stories.
+//   III. CHAPTER INDEX   — table of contents linking to the museum
+//                          halls, Archive, Family Archive and Journal.
 //
-// The home page is now publication-led (a newsroom front page), so
-// this slow editorial frontispiece lives here as the project's
-// "about the volume" page.
+// The home page is the museum entrance; this slow editorial
+// frontispiece is the project's "about the museum" page.
 
 type Props = {
   dict: Dictionary;
@@ -109,9 +108,10 @@ export function AboutPage({ dict }: Props) {
         </p>
 
         <ul className="mt-10 divide-y divide-amber-900/15 border-y border-amber-900/15">
-          <ChapterRow item={chapters.publications} href="/publications" />
-          <ChapterRow item={chapters.archive} href="/archive" />
           <ChapterRow item={chapters.stories} href="/istorii" />
+          <ChapterRow item={chapters.archive} href="/archive" />
+          <ChapterRow item={chapters.familyArchive} href="/family-archive" />
+          <ChapterRow item={chapters.publications} href="/publications" />
         </ul>
       </div>
     </section>

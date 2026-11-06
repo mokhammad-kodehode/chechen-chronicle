@@ -56,7 +56,7 @@ export function HeaderNav({ items, dict }: Props) {
   }
 
   return (
-    <div className="hidden items-center gap-8 md:flex">
+    <div className="hidden items-center gap-8 lg:flex">
       {/* Primary nav */}
       <nav className="flex items-center gap-7 text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-900/75">
         {items.map((item) => {

@@ -81,7 +81,7 @@ export function HeaderMobileMenu({ items }: Props) {
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Закрыть меню" : "Открыть меню"}
         aria-expanded={open}
-        className="relative grid h-10 w-10 place-items-center rounded-md border border-amber-900/25 bg-amber-100/40 text-amber-950 transition hover:border-amber-900/45 hover:bg-amber-100/70 md:hidden"
+        className="relative grid h-10 w-10 place-items-center rounded-md border border-amber-900/25 bg-amber-100/40 text-amber-950 transition hover:border-amber-900/45 hover:bg-amber-100/70 lg:hidden"
       >
         <span className="sr-only">{open ? "Закрыть меню" : "Открыть меню"}</span>
         <span
@@ -109,7 +109,7 @@ export function HeaderMobileMenu({ items }: Props) {
         onClick={() => setOpen(false)}
         aria-hidden
         className={[
-          "fixed inset-0 z-40 bg-[#0c0805]/70 backdrop-blur-md transition-opacity duration-300 md:hidden",
+          "fixed inset-0 z-40 bg-[#0c0805]/70 backdrop-blur-md transition-opacity duration-300 lg:hidden",
           open ? "opacity-100" : "pointer-events-none opacity-0",
         ].join(" ")}
       />
@@ -117,7 +117,7 @@ export function HeaderMobileMenu({ items }: Props) {
       {/* Slide-in panel — dark editorial theme */}
       <div
         className={[
-          "fixed right-0 top-0 z-50 flex h-[100svh] w-[85vw] max-w-sm flex-col bg-[#0c0805] text-amber-50 shadow-2xl transition-transform duration-300 md:hidden",
+          "fixed right-0 top-0 z-50 flex h-[100svh] w-[85vw] max-w-sm flex-col bg-[#0c0805] text-amber-50 shadow-2xl transition-transform duration-300 lg:hidden",
           open ? "translate-x-0" : "translate-x-full",
         ].join(" ")}
         aria-hidden={!open}

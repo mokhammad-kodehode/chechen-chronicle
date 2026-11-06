@@ -7,13 +7,22 @@ import { Reveal } from "@/app/components/common/Reveal";
 import { getCategories, type Category } from "@/app/components/stories/storiesData";
 import { format, type Dictionary } from "@/app/lib/i18n/shared";
 
-// Home → Stories preview. Dark editorial "portal" between the bright hero
-// and the timeline. Banner heading + three category "doors" (large
-// numerals, glyph, brief intro, CTA per door).
+// Home → museum halls. Dark editorial "portal": an optional heading +
+// three category "doors" (large numerals, glyph, brief intro, CTA per
+// door). Anchor `#stories-preview` is the landing target of the
+// "← На главную" button on category pages.
 
 type StoriesLabels = Dictionary["stories"];
 
-export function HomeStoriesPreview({ dict }: { dict: Dictionary }) {
+type Heading = { kicker: string; title: string; description: string };
+
+export function HomeStoriesPreview({
+  dict,
+  heading,
+}: {
+  dict: Dictionary;
+  heading?: Heading;
+}) {
   const t = dict.stories;
   const params = useParams();
   const lang = typeof params?.lang === "string" ? params.lang : "ru";
@@ -42,6 +51,20 @@ export function HomeStoriesPreview({ dict }: { dict: Dictionary }) {
       />
 
       <div className="relative mx-auto max-w-6xl px-6">
+        {heading ? (
+          <Reveal className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.38em] text-amber-300/80">
+              {heading.kicker}
+            </p>
+            <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl">
+              {heading.title}
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-[15px] leading-[1.75] text-amber-50/70 md:text-base">
+              {heading.description}
+            </p>
+          </Reveal>
+        ) : null}
+
         {/* Three category doors */}
         <div className="group/grid grid border border-amber-100/10 md:grid-cols-3">
           {categories.map((cat, idx) => (

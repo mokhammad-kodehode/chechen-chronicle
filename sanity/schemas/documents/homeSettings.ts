@@ -9,8 +9,7 @@ import { defineType, defineField } from "sanity";
 // decision where it belongs: presentation/curation, not the content
 // document itself.
 //
-// The per-slot curation of the front page (main / sidebar / bento
-// order) will grow here as a reference array in a later step.
+// `pinned` orders the «Из журнала» shelf on the museum home page.
 export const homeSettings = defineType({
   name: "homeSettings",
   title: "Главная страница",
@@ -18,17 +17,17 @@ export const homeSettings = defineType({
   fields: [
     defineField({
       name: "featured",
-      title: "Публикация на баннере",
+      title: "Материал номера",
       description:
-        "Показывается крупным баннером вверху главной и большой карточкой над списком на странице публикаций. Если не выбрана — берётся самая свежая публикация.",
+        "Крупный баннер вверху страницы журнала и первая карточка в блоке «Из журнала» на главной. Если не выбран — берётся самый свежий материал.",
       type: "reference",
       to: [{ type: "publication" }],
     }),
     defineField({
       name: "pinned",
-      title: "Закреплённые на главной",
+      title: "Журнал на главной",
       description:
-        "Публикации в нужном порядке занимают крупные слоты A1-разворота: 2 главных поста, затем верх сайдбара и компактные, затем бенто. Перетаскиванием меняй порядок. Свободные слоты добираются самыми свежими публикациями. Баннер задаётся полем выше отдельно.",
+        "Блок «Из журнала» на главной показывает три материала: сначала материал номера, затем этот список в заданном порядке (перетаскиванием), затем самые свежие.",
       type: "array",
       of: [{ type: "reference", to: [{ type: "publication" }] }],
     }),
@@ -38,8 +37,8 @@ export const homeSettings = defineType({
     prepare: ({ featuredTitle }: { featuredTitle?: string }) => ({
       title: "Главная страница",
       subtitle: featuredTitle
-        ? `Баннер: ${featuredTitle}`
-        : "Баннер: самая свежая публикация",
+        ? `Материал номера: ${featuredTitle}`
+        : "Материал номера: самый свежий",
     }),
   },
 });

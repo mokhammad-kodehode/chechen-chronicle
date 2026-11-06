@@ -13,13 +13,16 @@ type Props = {
 // mobile sheet) live in client subcomponents.
 
 export function Header({ dict }: Props) {
-  const nav = [
-    { href: "/", label: dict.nav.home },
+  // Museum-first order. On desktop the monogram is the way home, so
+  // "Главная" only appears in the mobile sheet.
+  const sections = [
     { href: "/istorii", label: dict.nav.stories },
-    { href: "/publications", label: dict.nav.publications },
     { href: "/archive", label: dict.nav.archive },
+    { href: "/family-archive", label: dict.nav.familyArchive },
+    { href: "/publications", label: dict.nav.publications },
     { href: "/about", label: dict.nav.about },
   ];
+  const mobileNav = [{ href: "/", label: dict.nav.home }, ...sections];
 
   return (
     <header className="relative z-40 bg-amber-50/85 font-nav text-amber-950 backdrop-blur-xl backdrop-saturate-150">
@@ -79,10 +82,10 @@ export function Header({ dict }: Props) {
         </LocalizedLink>
 
         {/* Desktop nav + locale switcher */}
-        <HeaderNav items={nav} dict={dict} />
+        <HeaderNav items={sections} dict={dict} />
 
         {/* Mobile burger + slide-in sheet */}
-        <HeaderMobileMenu items={nav} />
+        <HeaderMobileMenu items={mobileNav} />
       </div>
     </header>
   );

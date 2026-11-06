@@ -60,10 +60,7 @@ export function HomeTimelinePreview({ dict }: Props) {
       <div className="relative mx-auto max-w-4xl px-6">
         {/* Section header — same vocabulary as the publications spread */}
         <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.38em] text-amber-800/70">
-            Глава IV
-          </p>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-amber-950 md:text-5xl">
+          <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-amber-950 md:text-5xl">
             {dict.title}
           </h2>
           <p className="mt-3 font-display text-base italic text-amber-800/80 md:text-lg">

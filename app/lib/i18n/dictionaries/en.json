@@ -6,44 +6,50 @@
   },
   "nav": {
     "home": "Home",
-    "publications": "Publications",
+    "stories": "Museum",
     "archive": "Archive",
-    "stories": "Stories",
+    "familyArchive": "Family Archive",
+    "publications": "Journal",
     "about": "About"
   },
   "home": {
     "hero": {
-      "kicker": "HISTORICAL & CULTURAL ARCHIVE",
+      "kicker": "DIGITAL MUSEUM",
       "title": "Нохчийчоь",
       "subtitle": "A chronicle of millennia",
-      "description": "Explore a rich historical and cultural heritage — from ancient times to the present day. Documentary evidence, maps, and artefacts of the past.",
+      "description": "A digital museum of the history and memory of the Chechen people: three-dimensional exhibits, an archive of primary sources, and family stories shared by readers.",
       "buttonStart": "BEGIN EXPLORING",
       "buttonMap": "OPEN THE MAP",
       "volume": "Volume I · MMXXV",
-      "dateline": "An open archive of culture and memory"
+      "dateline": "A digital museum of history and memory"
     },
     "manifesto": {
-      "heading": "From the editors",
-      "paragraph1": "This chronicle gathers the voice of a land that neither wars nor oblivion could silence. The towers remember the names of clans. The blades are passed down with a name. The pages are written by generations of historians.",
-      "paragraph2": "Three forms of memory live here: text, artefact, and volume. Essays and research in Publications; manuscripts, maps and photographs in the Archive; towers and weapons in the three-dimensional Chronicles.",
+      "heading": "About the museum",
+      "paragraph1": "This museum gathers the voice of a land that neither wars nor oblivion could silence. The towers remember the names of clans. The blades are passed down with a name. And the memory kept by families — elders’ stories, letters, old photographs — too often leaves along with the people, unless someone writes it down in time.",
+      "paragraph2": "Four forms of memory live here. The museum halls hold three-dimensional exhibits of towers, weapons and people of the Caucasus. The Archive holds primary sources: documents, maps, manuscripts. The Family Archive holds stories sent in by readers themselves. The Journal carries articles by historians and local researchers.",
       "signature": "— The Editors"
     },
     "chapters": {
-      "heading": "In this volume",
-      "publications": {
+      "heading": "Sections of the museum",
+      "stories": {
         "numeral": "I",
-        "name": "Publications",
-        "description": "Essays, research, and archive finds."
+        "name": "Museum halls",
+        "description": "Three-dimensional exhibits: dwellings, weapons, warriors."
       },
       "archive": {
         "numeral": "II",
         "name": "Archive",
         "description": "Primary sources: documents, photographs, manuscripts, maps, audio."
       },
-      "stories": {
+      "familyArchive": {
         "numeral": "III",
-        "name": "3D Chronicles",
-        "description": "Volumetric stories: towers, weapons, warriors."
+        "name": "Family Archive",
+        "description": "Family stories, legends and photographs from readers."
+      },
+      "publications": {
+        "numeral": "IV",
+        "name": "Journal",
+        "description": "Articles by historians and local researchers, interviews, archive finds."
       }
     },
     "timeline": {
@@ -52,24 +58,66 @@
       "linkAll": "Open full timeline"
     },
     "publications": {
-      "title": "Latest publications",
-      "subtitle": "Research, essays, and archive finds",
-      "linkAll": "All publications"
+      "title": "From the Journal",
+      "subtitle": "Articles by historians and local researchers",
+      "linkAll": "The whole Journal"
+    },
+    "museum": {
+      "hero": {
+        "kicker": "DIGITAL MUSEUM",
+        "title": "Нохчийчоь",
+        "subtitle": "A museum of Chechen memory",
+        "description": "Walk through halls of three-dimensional towers, weapons and warriors, open the archive of primary sources, and read the stories that families keep.",
+        "ctaEnter": "Enter the halls",
+        "ctaShare": "Share a family story"
+      },
+      "halls": {
+        "kicker": "MUSEUM HALLS",
+        "title": "Permanent exhibition",
+        "description": "Three halls of three-dimensional stories. Each exhibit unfolds as you scroll, with text and model moving in sync."
+      },
+      "collections": {
+        "kicker": "MUSEUM COLLECTIONS",
+        "title": "Documents, voices and texts",
+        "archive": {
+          "title": "Archive",
+          "description": "Primary sources: documents, photographs, manuscripts, maps and recordings, with archive and shelf mark.",
+          "link": "Open the archive"
+        },
+        "family": {
+          "title": "Family Archive",
+          "description": "Memories, legends and family photographs sent in by readers. Every story is reviewed by the editors.",
+          "link": "Read the stories"
+        },
+        "journal": {
+          "title": "Journal",
+          "description": "Articles by historians and local researchers, interviews and archive finds — published as material is ready.",
+          "link": "Read the Journal"
+        }
+      },
+      "family": {
+        "kicker": "FAMILY ARCHIVE",
+        "title": "The memory families keep",
+        "description": "Elders’ stories, clan legends, letters and photographs. Unwritten, they leave along with the people. Tell your family’s story — once reviewed, it becomes part of the museum.",
+        "cta": "Share a story",
+        "linkAll": "The whole Family Archive",
+        "emptyNote": "The first stories will appear here as soon as the editors have reviewed them."
+      }
     }
   },
   "publications": {
-    "metaTitle": "Publications",
-    "metaDescription": "Research, essays, archive finds, and historian interviews — authorial texts that complement the chronology.",
+    "metaTitle": "Journal",
+    "metaDescription": "The museum journal: articles by historians and local researchers, interviews, essays and archive finds.",
     "hero": {
-      "kicker": "FROM THE HISTORIAN'S STUDY",
-      "title": "Publications",
-      "description": "Research, essays, archive finds, and interviews. A collection of texts that extend and refine the materials of the chronology."
+      "kicker": "MUSEUM JOURNAL",
+      "title": "Journal",
+      "description": "Articles by historians and local researchers, interviews, essays and archive finds. Texts that extend and refine the museum’s exhibition."
     },
-    "featuredLabel": "Featured publication",
-    "allHeading": "All publications",
+    "featuredLabel": "Featured article",
+    "allHeading": "All articles",
     "sortLabel": "Sort: newest first",
     "readShort": "Read",
-    "readLong": "Read the publication",
+    "readLong": "Read the article",
     "minutesShort": "{n} min read",
     "filters": {
       "all": "All",
@@ -81,17 +129,17 @@
       "text": "Nothing found. Try resetting the filters or changing your query.",
       "reset": "Reset"
     },
-    "back": "← All publications",
+    "back": "← The whole Journal",
     "homeBack": "← Home",
     "topics": "Topics:",
-    "more": "More publications",
-    "moreLink": "All publications →",
-    "loadingErrorTitle": "Could not load publications",
+    "more": "More from the Journal",
+    "moreLink": "The whole Journal →",
+    "loadingErrorTitle": "Could not load the Journal",
     "loadingErrorBody": "Something went wrong. Please try again.",
-    "openErrorTitle": "Could not open the publication",
+    "openErrorTitle": "Could not open the article",
     "openErrorBody": "Something went wrong while loading. Please try again.",
     "retry": "Try again",
-    "notFoundTitle": "Publication not found",
+    "notFoundTitle": "Article not found",
     "notFoundBody": "The material may have moved or the link may be outdated.",
     "categories": {
       "research": "Research",
@@ -102,10 +150,10 @@
     }
   },
   "stories": {
-    "metaTitle": "Volumetric stories — 3D Chronicles",
+    "metaTitle": "Museum halls — 3D Chronicles",
     "metaDescription": "Three chapters of Chechnya's history rendered as 3D scenes: tower, warrior, dagger. Each unfolds as you scroll — text and model move in sync.",
     "hero": {
-      "kicker": "3D Chronicles",
+      "kicker": "Museum halls",
       "title": "Volumetric stories",
       "description": "An archive of three-dimensional stories: the dwellings, the weapons, and the people of the Caucasus. Each chapter unfolds as you scroll — text and model move in sync, the era is something to see, not just read."
     },
@@ -131,11 +179,11 @@
   },
   "archive": {
     "metaTitle": "Archive",
-    "metaDescription": "Documents, photographs, manuscripts, and audio recordings — the primary sources that underpin the publications.",
+    "metaDescription": "Documents, photographs, manuscripts and audio recordings — the primary sources behind the museum’s exhibition.",
     "hero": {
       "kicker": "PRIMARY SOURCES",
       "title": "Archive",
-      "description": "Documents, photographs, manuscripts, maps, and audio recordings. Here you'll find the materials on which the historian's publications are built."
+      "description": "Documents, photographs, manuscripts, maps and audio recordings. The primary sources behind the museum’s exhibition, with archive and shelf mark."
     },
     "filters": {
       "title": "Filters",
@@ -192,6 +240,149 @@
       "relatedPublications": "Related publications",
       "download": "Download original",
       "viewFull": "Open at full size"
+    }
+  },
+  "family": {
+    "metaTitle": "Family Archive",
+    "metaDescription": "Family stories, legends, letters and photographs sent in by readers. The memory that families keep.",
+    "hero": {
+      "kicker": "FAMILY ARCHIVE",
+      "title": "Family memory",
+      "description": "Grandparents’ memories, clan legends, old photographs and letters — everything families keep that may vanish unless it is written down.",
+      "cta": "Share a story",
+      "count": "Stories in the archive: {n}"
+    },
+    "how": {
+      "heading": "How it works",
+      "steps": [
+        {
+          "title": "Tell it",
+          "text": "Write the story in your own words and attach photographs if you have them."
+        },
+        {
+          "title": "The editors review",
+          "text": "We read the text, check details with you if needed, and add historical context."
+        },
+        {
+          "title": "Into the museum",
+          "text": "Once reviewed, the story appears in the Family Archive — signed with your name or anonymously."
+        }
+      ]
+    },
+    "listHeading": "Readers’ stories",
+    "empty": {
+      "title": "Nothing here yet",
+      "text": "The Family Archive has only just opened. Tell your family’s story — it could be the first.",
+      "cta": "Tell a story"
+    },
+    "kinds": {
+      "memory": "Memory",
+      "legend": "Legend",
+      "photo": "Photograph",
+      "document": "Letter / document",
+      "other": "Other"
+    },
+    "card": {
+      "photos": "Photos: {n}",
+      "read": "Read the story"
+    },
+    "detail": {
+      "back": "← Family Archive",
+      "storyteller": "— {name}",
+      "anonymous": "The author asked to remain anonymous",
+      "era": "When",
+      "place": "Place",
+      "teip": "Teip",
+      "kind": "Type",
+      "editorNote": "Editors’ note",
+      "photos": "Photographs",
+      "openPhoto": "Open the photo at full size",
+      "shareTitle": "Remember a story like this?",
+      "shareText": "Every story written down is one more page of memory saved.",
+      "shareCta": "Share yours",
+      "notFoundTitle": "Story not found",
+      "notFoundBody": "It may still be under review, or the link is out of date."
+    },
+    "submit": {
+      "metaTitle": "Share a family story",
+      "metaDescription": "Tell your family’s story for the Family Archive: memories, legends, letters and photographs.",
+      "back": "← Family Archive",
+      "kicker": "FAMILY ARCHIVE",
+      "title": "Share a story",
+      "description": "Tell what your family remembers. There is no need to write like a historian: living details, names, places and the words of elders matter most.",
+      "tipsHeading": "What you can send",
+      "tips": [
+        "Elders’ memories of life, events, resettlement",
+        "Legends of your clan and teip, stories about ancestors",
+        "Old photographs — with a note on who and where",
+        "Letters, documents, certificates — just photograph them"
+      ],
+      "privacy": "Only the editors see your contact details; they are never published. We may contact you before publishing to check details. The story appears on the site only after review.",
+      "sections": {
+        "story": "The story",
+        "photos": "Photographs",
+        "signature": "Signature on the site",
+        "contacts": "Contact for the editors"
+      },
+      "fields": {
+        "title": "Title",
+        "titlePlaceholder": "For example: How my great-grandfather built a house in Kharachoy",
+        "kind": "What are you sending",
+        "story": "The story",
+        "storyPlaceholder": "Tell it in your own words: who, where, when, what happened. Names, details and the words of elders are especially valuable.",
+        "storyCounter": "{n} of at least {min} characters",
+        "era": "When it happened",
+        "eraPlaceholder": "1944, the 1950s, late 19th century…",
+        "place": "Village or district",
+        "placePlaceholder": "For example: Vedeno",
+        "teip": "Teip",
+        "teipPlaceholder": "Optional",
+        "photosAdd": "Add photos",
+        "photosHint": "Up to {n} photos in JPG, PNG or WebP. Large images are resized automatically.",
+        "caption": "Caption: who, where, when",
+        "remove": "Remove",
+        "storytellerName": "How to sign the story",
+        "storytellerPlaceholder": "For example: Told by Mariam, granddaughter",
+        "anonymous": "Publish anonymously — no signature",
+        "fullName": "Your name",
+        "email": "Email",
+        "phone": "Phone, WhatsApp or Telegram",
+        "contactHint": "Give an email or a phone number — at least one.",
+        "message": "Message to the editors",
+        "messagePlaceholder": "Optional: anything we should know, how best to reach you",
+        "consentPublish": "I agree to the story and photographs being published on the site after editorial review.",
+        "consentRights": "This is my family’s story, or I have my family’s consent, and I have the right to share these materials.",
+        "required": "required",
+        "optional": "optional"
+      },
+      "submit": "Send the story",
+      "sending": "Sending…",
+      "preparing": "Preparing photos…",
+      "success": {
+        "title": "Thank you! Your story has arrived",
+        "text": "The editors will read it and contact you if needed. Once reviewed, the story will appear in the Family Archive.",
+        "again": "Send another one",
+        "back": "To the Family Archive"
+      },
+      "errors": {
+        "invalid_title": "Add a title — at least a few words.",
+        "invalid_story": "The story is too short or too long.",
+        "invalid_kind": "Choose what you are sending.",
+        "invalid_field": "One of the fields is invalid or too long.",
+        "missing_name": "Please give your name.",
+        "missing_contact": "Give an email or a phone number so the editors can reach you.",
+        "invalid_email": "Please check the email address.",
+        "consent_required": "Both consent boxes need to be ticked.",
+        "too_many_images": "You can attach at most {n} photos.",
+        "invalid_image": "One of the files does not look like a photo. JPG, PNG or WebP will work.",
+        "too_large": "The photos are too heavy. Remove one or more and try again.",
+        "too_fast": "The form was sent too quickly. Wait a couple of seconds and try again.",
+        "rate_limited": "Too many submissions in a row. Please try again in an hour.",
+        "not_configured": "Story submissions are temporarily unavailable. Please try later.",
+        "server_error": "Could not save the story. Please try again a little later.",
+        "network": "Could not send. Check your connection and try again.",
+        "image_read": "Could not process the photo “{name}”. Try another file (JPG or PNG)."
+      }
     }
   }
 }

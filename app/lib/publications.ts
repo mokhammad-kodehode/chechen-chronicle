@@ -239,58 +239,29 @@ export function formatPublicationDate(
 }
 
 // ──────────────────────────────────────────────────────────────────
-// Editorial home arrangement.
+// «Из журнала» shelf on the museum home page.
 //
-// The banner is the curated `featured` publication (or the latest as a
-// fallback). The rest of the A1 spread is filled from one ordered
-// queue: first the `pinned` publications (in the editor's order, so
-// they take the prominent slots), then everything else newest-first.
-// Slots are sliced off in reading order — mainPosts (2) → sidebar top +
-// compact (4) → bento (6) — with no category juggling, so placement is
-// explicit and predictable; the editor reorders via the pinned list.
+// Order: the curated `featured` article, then the editor's `pinned`
+// list (homeSettings), then everything else newest-first. Dangling or
+// duplicate ids are skipped.
 // ──────────────────────────────────────────────────────────────────
 
-// Rough "content depth": longer titles + excerpts mark heavier reads.
-// Used for bento tile sizing (spanForCard) so long-copy posts earn a
-// wider tile.
-export function contentDepth(p: Pick<Publication, "title" | "excerpt">): number {
-  return p.title.length * 1.5 + (p.excerpt?.length ?? 0);
-}
-
-export type HomeArrangement = {
-  banner: Publication | undefined;
-  mainPosts: Publication[];
-  smallPosts: Publication[];
-  bentoExtras: Publication[];
-};
-
-export function arrangeForHome(
+export function pickForHomeJournal(
   all: Publication[],
   featured?: Publication,
-  pinnedIds: string[] = []
-): HomeArrangement {
-  const banner = featured ?? all[0];
+  pinnedIds: string[] = [],
+  limit = 3
+): Publication[] {
   const byId = new Map(all.map((p) => [p.id, p]));
-
-  // One ordered queue feeds every slot: curated `pinned` first (in the
-  // editor's order, skipping the banner and any dangling ids), then the
-  // remaining publications newest-first (caller passes them in
-  // publishedAt-desc order, stubs appended).
-  const seen = new Set<string>(banner ? [banner.id] : []);
-  const pinned: Publication[] = [];
-  for (const id of pinnedIds) {
-    if (seen.has(id)) continue;
-    const p = byId.get(id);
-    if (!p) continue;
-    pinned.push(p);
-    seen.add(id);
-  }
-  const queue = [...pinned, ...all.filter((p) => !seen.has(p.id))];
-
-  return {
-    banner,
-    mainPosts: queue.slice(0, 2),
-    smallPosts: queue.slice(2, 6),
-    bentoExtras: queue.slice(6, 12),
+  const seen = new Set<string>();
+  const picked: Publication[] = [];
+  const take = (p: Publication | undefined) => {
+    if (!p || seen.has(p.id) || picked.length >= limit) return;
+    seen.add(p.id);
+    picked.push(p);
   };
+  take(featured);
+  pinnedIds.forEach((id) => take(byId.get(id)));
+  all.forEach(take);
+  return picked;
 }

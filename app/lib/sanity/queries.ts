@@ -72,3 +72,61 @@ export const FALLBACK_RELATED_QUERY = groq`
 export const CATEGORIES_IN_USE_QUERY = groq`
   array::unique(*[_type == "publication" && defined(category)].category)
 `;
+
+// ──────────────────────────────────────────────────────────────────
+// Народный архив. The public client reads the "published" perspective,
+// so submissions that are still drafts (on review) never show up here.
+// Submitter contacts live in a separate, never-published document type
+// and are not referenced by these projections.
+// ──────────────────────────────────────────────────────────────────
+
+const FAMILY_STORY_CARD_FIELDS = groq`
+  _id,
+  "slug": slug.current,
+  title,
+  kind,
+  era,
+  place,
+  teip,
+  storytellerName,
+  anonymous,
+  submittedAt,
+  // First ~320 characters only — cards don't need the whole text.
+  "excerpt": array::join(string::split(coalesce(story, ""), "")[0...320], ""),
+  "cover": images[0]{
+    ...,
+    "lqip": asset->metadata.lqip
+  },
+  "imageCount": count(images),
+`;
+
+export const ALL_FAMILY_STORIES_QUERY = groq`
+  *[_type == "familyStory" && defined(slug.current)]
+    | order(coalesce(submittedAt, _createdAt) desc) {
+    ${FAMILY_STORY_CARD_FIELDS}
+  }
+`;
+
+export const LATEST_FAMILY_STORIES_QUERY = groq`
+  *[_type == "familyStory" && defined(slug.current)]
+    | order(coalesce(submittedAt, _createdAt) desc)[0...$limit] {
+    ${FAMILY_STORY_CARD_FIELDS}
+  }
+`;
+
+export const FAMILY_STORY_BY_SLUG_QUERY = groq`
+  *[_type == "familyStory" && slug.current == $slug][0] {
+    ${FAMILY_STORY_CARD_FIELDS}
+    story,
+    editorNote,
+    "images": images[]{
+      ...,
+      "lqip": asset->metadata.lqip,
+      "dimensions": asset->metadata.dimensions{width, height}
+    },
+  }
+`;
+
+export const FAMILY_STORY_SLUGS_QUERY = groq`
+  *[_type == "familyStory" && defined(slug.current)].slug.current
+`;

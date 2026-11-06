@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Нохчийчоь — цифровой музей
 
-## Getting Started
+Next.js 16 + Sanity. Разделы сайта:
 
-First, run the development server:
+| Раздел | URL | Откуда данные |
+| --- | --- | --- |
+| Главная (вход в музей) | `/[lang]` | залы — `storiesData.tsx`, остальное — Sanity |
+| Залы музея (3D-хроники) | `/[lang]/istorii` | `app/components/stories/` |
+| Архив первоисточников | `/[lang]/archive` | `app/lib/archive.ts` |
+| Народный архив | `/[lang]/family-archive` | Sanity, тип `familyStory` |
+| Форма «Поделиться историей» | `/[lang]/family-archive/submit` | пишет в Sanity через `/api/family-archive` |
+| Журнал | `/[lang]/publications` | Sanity, тип `publication` |
+| Sanity Studio | `/studio` | — |
+
+## Запуск
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env.local`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+NEXT_PUBLIC_SANITY_PROJECT_ID=...
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2024-08-08
+# Нужен для приёма историй в народный архив (только сервер, не NEXT_PUBLIC_!)
+SANITY_API_WRITE_TOKEN=...
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Народный архив: как это работает
 
-## Learn More
+1. Читатель заполняет форму на `/family-archive/submit`. Фото уменьшаются прямо
+   в браузере (до 2000 px, JPEG) — это укладывает запрос в лимит хостинга и
+   стирает EXIF, включая GPS-координаты.
+2. `POST /api/family-archive` проверяет поля, антиспам (скрытое поле-ловушка,
+   минимальное время заполнения, не больше 5 отправок в час с одного IP) и
+   создаёт в Sanity **два черновика**:
+   - `familyStory` — сама история и фото. Пока это черновик, на сайте её нет.
+   - `familySubmissionContact` — имя, email, телефон отправителя. Публикация
+     этого типа отключена в `sanity.config.ts`, поэтому контакты никогда не
+     попадают в публичный датасет.
+3. Редактор открывает в Studio «Народный архив → Новые и неопубликованные»,
+   правит текст, при желании добавляет «Комментарий редакции» и нажимает
+   **Publish**. Через минуту история появляется на сайте.
+4. Отклонённую заявку достаточно удалить (и её контакты в «Контакты
+   отправителей»).
 
-To learn more about Next.js, take a look at the following resources:
+### Токен для записи
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+sanity.io/manage → проект → **API → Tokens → Add API token**, права **Editor**.
+Положите его в `SANITY_API_WRITE_TOKEN` (локально в `.env.local`, на хостинге —
+в переменные окружения). Без токена форма показывает «Приём историй временно
+не работает», а сайт продолжает работать.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> Фото загружаются в хранилище Sanity сразу при отправке. URL у них
+> неугадываемый, но технически публичный — как у любых ассетов Sanity.
 
-## Deploy on Vercel
+## Переводы
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`app/lib/i18n/dictionaries/{ru,en,ce}.json`. `ce.json` пока копия `ru.json` —
+замените строки, когда появится перевод на чеченский.
